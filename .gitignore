@@ -1,0 +1,14 @@
+/core-bc/modules/portlet/src/main/resources/rebel.xml
+
+.DS_Store
+
+.settings
+.settings/*
+.classpath
+.project
+
+target/
+.settings
+
+.idea/
+*.iml
