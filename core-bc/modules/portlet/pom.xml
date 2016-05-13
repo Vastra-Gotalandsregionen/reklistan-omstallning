@@ -77,23 +77,28 @@ Generation time : 2015-01-14 09:02:50 CET
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.liferay.portal</groupId>
             <artifactId>portal-service</artifactId>
+            <scope>provided</scope>
         </dependency>
         <!-- To get tag assistance in your IDE -->
         <dependency>
             <groupId>com.liferay.portal</groupId>
             <artifactId>util-taglib</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

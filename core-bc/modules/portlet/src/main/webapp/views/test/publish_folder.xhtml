@@ -14,26 +14,12 @@
 	<h:body>
 
     <h2>
-      REK-listan omställning
+      Publicera folder
     </h2>
 
 	<p>
-		<h:link value="Klona folder" outcome="clone_folder" />
+		<h:link value="Tillbaka" outcome="view" />
 	</p>
-	<p>
-		<h:link value="Publicera folder" outcome="publish_folder" />
-	</p>
-
-
-	<ui:fragment rendered="false">
-		<!-- Testing -->
-		<p>
-			TestString is: #{omstallningBackingBean.getTestString()}
-		</p>
-		<p>
-			TestString is: #{omstallningBackingBean.getTestStringFromService()}
-		</p>
-	</ui:fragment>
 
 	</h:body>
 </f:view>
