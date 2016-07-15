@@ -58,7 +58,7 @@ public class FolderService {
     }
 
     public void cloneFolder(long folderId) {
-        LOGGER.info("cloneFolder()");
+        //LOGGER.info("cloneFolder()");
         copyFolder(folderId, 0);
     }
 
@@ -159,7 +159,7 @@ public class FolderService {
     }
 
     private void deleteAllPermissions(JournalArticle article, long ownerRoleId) {
-        LOGGER.info("deleteAllPermissions() - for artice: " + article.getTitle("sv_SE", true));
+        //LOGGER.info("deleteAllPermissions() - for artice: " + article.getTitle("sv_SE", true));
 
         try {
 
@@ -177,9 +177,9 @@ public class FolderService {
 
                 if(!isOwnerResource) {
                     ResourcePermissionLocalServiceUtil.deleteResourcePermission(resourcePermission);
-                    LOGGER.info("ResourcePermission was NOT owner permission. ResourcePermission was deleted.");
+                    //LOGGER.info("ResourcePermission was NOT owner permission. ResourcePermission was deleted.");
                 } else {
-                    LOGGER.info("ResourcePermission WAS owner permission. ResourcePermission was kept.");
+                    //LOGGER.info("ResourcePermission WAS owner permission. ResourcePermission was kept.");
                 }
 
             }

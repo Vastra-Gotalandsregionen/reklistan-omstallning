@@ -13,6 +13,7 @@ import se.vgregion.reklistan.service.FolderService;
 import se.vgregion.reklistan.util.FacesUtil;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -54,12 +55,21 @@ public class CloneFolderBackingBean {
     }
 
     public String cloneFolder() {
-        LOGGER.info("cloneFolder()");
-        LOGGER.info("cloneFolder() - folderIdToClone is: " + folderIdToClone);
+        //LOGGER.info("cloneFolder()");
+        //LOGGER.info("cloneFolder() - folderIdToClone is: " + folderIdToClone);
+
 
         folderService.cloneFolder(folderIdToClone);
 
-        return "clone_folder";
+
+        FacesMessage message =
+                new FacesMessage(FacesMessage.SEVERITY_INFO,
+                        "Folder successfully cloned", "Folder successfully cloned");
+        FacesContext.getCurrentInstance()
+                .addMessage("", message);
+
+        return null;
+       //return "clone_folder?faces-redirect=true&includeViewParams=true";
     }
 
     @PostConstruct
