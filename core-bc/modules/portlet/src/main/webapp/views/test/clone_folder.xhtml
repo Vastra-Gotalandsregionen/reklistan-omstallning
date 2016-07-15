@@ -17,34 +17,22 @@
       Klona folder
     </h2>
 
-	<p>
-		<h:link value="Tillbaka" outcome="view" />
-	</p>
+	<h:form id="cloneFolderForm">
 
-	<h:form>
-
-		<ui:fragment rendered="false">
-		<h:outputLabel for="copyFrom">Kopia från katalog</h:outputLabel>
-		<h:selectOneMenu id="copyFrom">
-			<f:selectItem itemValue="-1" itemLabel="" />
-			<ui:repeat value="#{cloneFolderBackingBean.rootFolders}" var="folder">
-				<f:selectItem itemValue="#{folder.folderId}" itemLabel="#{folder.name}" />
-			</ui:repeat>
-		</h:selectOneMenu>
+		<ui:fragment rendered="true">
+			<h:outputLabel for="copyFrom">Kopia från mapp</h:outputLabel>
+			<h:selectOneMenu id="copyFrom" value="#{cloneFolderBackingBean.folderIdToClone}">
+				<f:selectItem itemValue="#{null}" itemLabel="Välj mapp" />
+				<f:selectItems value="#{cloneFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
+			</h:selectOneMenu>
 		</ui:fragment>
 
+		<h:commandButton id="submitButton" value="Kopiera" styleClass=""
+						 action="#{cloneFolderBackingBean.cloneFolder}" />
+
+		<h:link value="Tillbaka" outcome="view" />
+
 	</h:form>
-
-	<ui:fragment rendered="true">
-		<ul>
-			<ui:repeat value="#{cloneFolderBackingBean.rootFolders}" var="folder">
-				<li>
-					#{folder.name} - (#{folder.folderId})
-				</li>
-			</ui:repeat>
-		</ul>
-	</ui:fragment>
-
 
 	</h:body>
 </f:view>

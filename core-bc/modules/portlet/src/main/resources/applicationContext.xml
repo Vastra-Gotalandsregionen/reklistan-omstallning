@@ -15,6 +15,7 @@
        xmlns:b="http://www.springframework.org/schema/beans">
 
     <context:component-scan base-package="se.vgregion.reklistan.backingbean"/>
+    <context:component-scan base-package="se.vgregion.reklistan.util"/>
     <context:component-scan base-package="se.vgregion.reklistan.service"/>
 
     <context:annotation-config/>
