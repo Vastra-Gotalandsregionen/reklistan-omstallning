@@ -20,4 +20,9 @@
 
     <context:annotation-config/>
 
+    <bean id="messageSource"
+          class="org.springframework.context.support.ReloadableResourceBundleMessageSource"
+          p:basename="WEB-INF/classes/se/vgregion/LocalizationBundle" />
+
+
 </beans>

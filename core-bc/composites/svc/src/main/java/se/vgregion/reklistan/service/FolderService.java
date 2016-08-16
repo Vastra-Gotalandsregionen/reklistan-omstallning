@@ -20,6 +20,7 @@ import javax.annotation.PostConstruct;
 
 import com.liferay.portlet.journal.model.JournalFolder;
 import se.vgregion.reklistan.constants.RekListanConstants;
+import se.vgregion.reklistan.exception.DuplicateFolderNameException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,27 +58,54 @@ public class FolderService {
 
     }
 
-    public void cloneFolder(long folderId) {
+    public void cloneFolder(long copyFromFolderId, String folderNameNew) throws Exception {
         //LOGGER.info("cloneFolder()");
-        copyFolder(folderId, 0);
-    }
-
-    private void copyFolder(long copyFromFolderId, long copyToFolderId) {
 
         try {
             JournalFolder copyFromFolder = JournalFolderLocalServiceUtil.fetchFolder(copyFromFolderId);
 
-            long companyId = copyFromFolder.getCompanyId();
+            long groupId = copyFromFolder.getGroupId();
+            long parentFolderId = 0;
+            String newFolderDescription = "";
+            String newFolderName = folderNameNew;
+
+            if(newFolderName.equals("")) {
+                newFolderName = copyFromFolder.getName() + " (kopia)";
+            }
+
+            JournalFolder newFolder = createFolder(copyFromFolder.getUserId(), groupId, parentFolderId, newFolderName, newFolderDescription);
+
+            copyFolder(copyFromFolderId, newFolder.getFolderId(), true);
+        } catch (Exception e) {
+
+            if(e instanceof com.liferay.portlet.journal.DuplicateFolderNameException) {
+                throw new DuplicateFolderNameException();
+            } else {
+                e.printStackTrace();
+            }
+        }
+
+
+        //copyFolder(copyFromFolderId, 0);
+    }
+
+    private void copyFolder(long copyFromFolderId, long copyToFolderId, boolean isRoot) {
+
+        try {
+            JournalFolder copyFromFolder = JournalFolderLocalServiceUtil.fetchFolder(copyFromFolderId);
+
             long groupId = copyFromFolder.getGroupId();
             String newFolderDescription = "";
             String newFolderName = copyFromFolder.getName();
 
-            if(copyToFolderId == 0) {
-                newFolderName = copyFromFolder.getName() + " (copy)";
-            }
+            JournalFolder newFolder = null;
 
-            // Clone folder
-            JournalFolder newFolder = createFolder(copyFromFolder.getUserId(), groupId, copyToFolderId, newFolderName, newFolderDescription);
+            if(isRoot) {
+                newFolder = JournalFolderLocalServiceUtil.fetchFolder(copyToFolderId);
+            } else {
+                // Clone folder
+                newFolder = createFolder(copyFromFolder.getUserId(), groupId, copyToFolderId, newFolderName, newFolderDescription);
+            }
 
             // Get articles
             List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(groupId, copyFromFolderId);
@@ -110,7 +138,7 @@ public class FolderService {
             // Copy subfolders recursively
             List<JournalFolder> copyFromSubFolders = JournalFolderLocalServiceUtil.getFolders(groupId, copyFromFolderId);
             for(JournalFolder copyFromSubFolder : copyFromSubFolders) {
-                copyFolder(copyFromSubFolder.getFolderId(), newFolder.getFolderId());
+                copyFolder(copyFromSubFolder.getFolderId(), newFolder.getFolderId(), false);
             }
 
 
@@ -141,7 +169,7 @@ public class FolderService {
         }
     }
 
-    private JournalFolder createFolder(long userId, long groupId, long parentFolderId, String folderName, String folderDescription) {
+    private JournalFolder createFolder(long userId, long groupId, long parentFolderId, String folderName, String folderDescription) throws PortalException {
 
         JournalFolder newFolder = null;
 
@@ -149,8 +177,6 @@ public class FolderService {
 
         try {
             newFolder = JournalFolderLocalServiceUtil.addFolder(userId, groupId, parentFolderId, folderName, folderDescription , serviceContext);
-        } catch (PortalException e) {
-            e.printStackTrace();
         } catch (SystemException e) {
             e.printStackTrace();
         }

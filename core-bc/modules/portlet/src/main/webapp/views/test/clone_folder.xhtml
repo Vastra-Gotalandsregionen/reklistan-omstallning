@@ -31,9 +31,13 @@
 			</h:selectOneMenu>
 		</ui:fragment>
 
+		<ui:fragment rendered="true">
+			<h:outputLabel for="newFolderName" value="Namn på ny mapp" />
+			<h:inputText id="newFolderName" value="#{cloneFolderBackingBean.folderNameNew}" />
+		</ui:fragment>
+
 		<div>
-			<h:commandButton id="submitButton" value="Kopiera" styleClass=""
-							 action="#{cloneFolderBackingBean.cloneFolder}" />
+			<h:commandButton id="submitButton" value="Kopiera" styleClass="" action="#{cloneFolderBackingBean.cloneFolder}" />
 		</div>
 
 		<div>
