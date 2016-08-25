@@ -9,6 +9,7 @@ import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
+import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.portlet.journal.service.JournalFolderLocalServiceUtil;
@@ -20,7 +21,8 @@ import javax.annotation.PostConstruct;
 
 import com.liferay.portlet.journal.model.JournalFolder;
 import se.vgregion.reklistan.constants.RekListanConstants;
-import se.vgregion.reklistan.exception.DuplicateFolderNameException;
+import se.vgregion.reklistan.exception.CloneFolderException;
+import se.vgregion.reklistan.exception.PublishFolderException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,8 +60,13 @@ public class FolderService {
 
     }
 
-    public void cloneFolder(long copyFromFolderId, String folderNameNew) throws Exception {
-        //LOGGER.info("cloneFolder()");
+    public void cloneFolder(long copyFromFolderId, String folderNameNew) throws CloneFolderException {
+
+        if(copyFromFolderId <= 0) {
+            throw new CloneFolderException("clone-folder-error-must-choose-a-folder-to-clone-from");
+        } else if(folderNameNew.equals("")) {
+            throw new CloneFolderException("clone-folder-error-must-specify-new-folder-name");
+        }
 
         try {
             JournalFolder copyFromFolder = JournalFolderLocalServiceUtil.fetchFolder(copyFromFolderId);
@@ -76,17 +83,93 @@ public class FolderService {
             JournalFolder newFolder = createFolder(copyFromFolder.getUserId(), groupId, parentFolderId, newFolderName, newFolderDescription);
 
             copyFolder(copyFromFolderId, newFolder.getFolderId(), true);
-        } catch (Exception e) {
 
-            if(e instanceof com.liferay.portlet.journal.DuplicateFolderNameException) {
-                throw new DuplicateFolderNameException();
-            } else {
-                e.printStackTrace();
-            }
+        } catch (DuplicateFolderNameException e) {
+            throw new CloneFolderException("clone-folder-error-duplicate-folder-map-name", e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
         //copyFolder(copyFromFolderId, 0);
+    }
+
+    public void unpublishOldAndPublishNew(long folderIdToUnpublish, long folderIdToPublish) throws PublishFolderException {
+
+        if(folderIdToUnpublish <= 0) {
+            throw new PublishFolderException("publish-folder-error-must-choose-a-folder-to-unpublish");
+        } else if(folderIdToPublish <= 0) {
+            throw new PublishFolderException("publish-folder-error-must-choose-a-folder-to-publish");
+        } else if(folderIdToUnpublish == folderIdToPublish) {
+            throw new PublishFolderException("publish-folder-error-folders-cannot-be-the-same");
+        }
+
+        try {
+            unpublishFolder(folderIdToUnpublish);
+            publishFolder(folderIdToPublish);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void publishFolder(long folderIdToPublish) throws Exception {
+        try {
+            JournalFolder folderToPublish = JournalFolderLocalServiceUtil.fetchFolder(folderIdToPublish);
+
+            long groupId = folderToPublish.getGroupId();
+
+            // Get articles
+            List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(groupId, folderIdToPublish);
+
+            for(JournalArticle article : articles) {
+                // Add view permission Guest
+                addViewPermissionGuest(article);
+
+                // Add view permission User
+                addViewPermissionUser(article);
+            }
+
+            // Publish subfolders recursively
+            List<JournalFolder> subFolders = JournalFolderLocalServiceUtil.getFolders(groupId, folderIdToPublish);
+            for(JournalFolder subFolder : subFolders) {
+                publishFolder(subFolder.getFolderId());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    private void unpublishFolder(long folderIdToUnpublish) throws Exception {
+        try {
+            JournalFolder folderToUnpublish = JournalFolderLocalServiceUtil.fetchFolder(folderIdToUnpublish);
+
+            long groupId = folderToUnpublish.getGroupId();
+            long companyId = folderToUnpublish.getCompanyId();
+
+            // Get articles
+            List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(groupId, folderIdToUnpublish);
+
+            for(JournalArticle article : articles) {
+                Role ownerRole = RoleLocalServiceUtil.fetchRole(companyId, RoleConstants.OWNER);
+
+                // Remove all permissions on article
+                deleteAllPermissions(article, ownerRole.getRoleId());
+
+                // Add Reviewer-Secretary permissions
+                addReviewerSecretaryPermissions(article);
+            }
+
+            // Unpublish subfolders recursively
+            List<JournalFolder> subFolders = JournalFolderLocalServiceUtil.getFolders(groupId, folderIdToUnpublish);
+            for(JournalFolder subFolder : subFolders) {
+                unpublishFolder(subFolder.getFolderId());
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void copyFolder(long copyFromFolderId, long copyToFolderId, boolean isRoot) {
@@ -167,6 +250,31 @@ public class FolderService {
             String[] actionsIds = new String[]{ActionKeys.VIEW, ActionKeys.UPDATE};
             setArticlePermissions(article, reviewerSecretaryRole, actionsIds);
         }
+    }
+
+    private void addViewPermissionGuest(JournalArticle article) {
+        try {
+            Role guestRole = RoleLocalServiceUtil.fetchRole(article.getCompanyId(), RoleConstants.GUEST);
+
+            addViewPermission(article, guestRole);
+        } catch (SystemException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addViewPermissionUser(JournalArticle article) {
+        try {
+            Role userRole = RoleLocalServiceUtil.fetchRole(article.getCompanyId(), RoleConstants.USER);
+
+            addViewPermission(article, userRole);
+        } catch (SystemException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addViewPermission(JournalArticle article, Role role) {
+        String[] actionsIds = new String[]{ActionKeys.VIEW};
+        setArticlePermissions(article, role, actionsIds);
     }
 
     private JournalFolder createFolder(long userId, long groupId, long parentFolderId, String folderName, String folderDescription) throws PortalException {

@@ -30,18 +30,20 @@ public class OmstallningBackingBean  {
     @Autowired
     private FolderService folderService;
 
+    private String portletNamespace;
+
+    public String getPortletNamespace() {
+        return portletNamespace;
+    }
+
+    public void setPortletNamespace(String portletNamespace) {
+        this.portletNamespace = portletNamespace;
+    }
+
     @PostConstruct
     public void init() {
+        portletNamespace = FacesContext.getCurrentInstance().getExternalContext().encodeNamespace("");
     }
 
-    public String getTestString() {
-        return "test";
-    }
-
-    public String getTestStringFromService() {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
-        ThemeDisplay themeDisplay = (ThemeDisplay)externalContext.getRequestMap().get(WebKeys.THEME_DISPLAY);
-        return folderService.getTestString();
-    }
 
 }

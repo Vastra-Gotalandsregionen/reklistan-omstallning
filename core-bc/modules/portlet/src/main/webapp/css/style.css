@@ -5,3 +5,28 @@
 }
 
 .reklistan-omstallning-portlet .msg-wrap ul li {}
+
+.reklistan-omstallning-portlet .ajax-form {
+    position: relative;
+}
+
+.reklistan-omstallning-portlet .ajax-mask {
+    position: absolute;
+}
+
+.reklistan-omstallning-portlet .ajax-mask.ajax-mask-active {
+    background: #fff url(../images/loading_animation.gif) center center no-repeat;
+    height: 100%;
+    opacity: 0.8;
+    width: 100%;
+    z-index: 1000;
+}
+
+
+.reklistan-omstallning-portlet .button-holder .btn {
+    margin: 0 10px 0 0;
+}
+
+.reklistan-omstallning-portlet .button-holder .btn:last-child {
+    margin-right: 0;
+}

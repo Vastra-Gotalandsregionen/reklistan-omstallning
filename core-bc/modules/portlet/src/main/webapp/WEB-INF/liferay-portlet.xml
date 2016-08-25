@@ -6,9 +6,11 @@
 
     <portlet>
         <portlet-name>reklistan-omstallning-test</portlet-name>
+        <action-url-redirect>true</action-url-redirect>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
         <header-portlet-css>/css/style.css</header-portlet-css>
+        <header-portlet-javascript>/js/reklistan_omstallning.js</header-portlet-javascript>
         <css-class-wrapper>reklistan-omstallning-portlet</css-class-wrapper>
     </portlet>
 

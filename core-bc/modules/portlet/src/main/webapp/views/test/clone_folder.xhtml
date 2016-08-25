@@ -13,38 +13,47 @@
 	<h:head />
 	<h:body>
 
-    <h2>
-      Klona folder
-    </h2>
+		<h:form id="cloneFolderForm" styleClass="ajax-form">
+			<div class="ajax-mask"></div>
 
-	<h:form id="cloneFolderForm">
+			<h3>
+				<h:outputText value="#{bundle['clone-folder']}" />
+			</h3>
 
-		<div class="msg-wrap">
-			<h:messages showSummary="true" showDetail="false" />
-		</div>
+			<div class="msg-wrap">
+				<h:messages showSummary="true" showDetail="false" />
+			</div>
 
-		<ui:fragment rendered="true">
-			<h:outputLabel for="copyFrom">Kopia från mapp</h:outputLabel>
-			<h:selectOneMenu id="copyFrom" value="#{cloneFolderBackingBean.folderIdToClone}">
-				<f:selectItem itemValue="#{null}" itemLabel="Välj mapp" />
-				<f:selectItems value="#{cloneFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
-			</h:selectOneMenu>
-		</ui:fragment>
+			<div>
+				<h:outputLabel for="copyFrom" value="#{bundle['folder-to-clone']}" />
+				<h:selectOneMenu id="copyFrom" value="#{cloneFolderBackingBean.folderIdToClone}">
+					<f:selectItem itemValue="#{null}" itemLabel="#{bundle['choose-folder']}" />
+					<f:selectItems value="#{cloneFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
+				</h:selectOneMenu>
+			</div>
 
-		<ui:fragment rendered="true">
-			<h:outputLabel for="newFolderName" value="Namn på ny mapp" />
-			<h:inputText id="newFolderName" value="#{cloneFolderBackingBean.folderNameNew}" />
-		</ui:fragment>
+			<div>
+				<h:outputLabel for="newFolderName" value="#{bundle['new-folder-name']}" />
+				<h:inputText id="newFolderName" value="#{cloneFolderBackingBean.folderNameNew}" />
+			</div>
 
-		<div>
-			<h:commandButton id="submitButton" value="Kopiera" styleClass="" action="#{cloneFolderBackingBean.cloneFolder}" />
-		</div>
+			<div class="button-holder">
+				<h:commandButton id="submitButton" value="#{bundle['clone']}" styleClass="btn btn-primary">
+					<f:ajax execute=":cloneFolderForm" listener="#{cloneFolderBackingBean.cloneFolder}"
+							onevent="function eventHandler(data) {ReklistanOmstallning.ajaxEventHandler(data, '#{cloneFolderBackingBean.portletNamespace}')}"
+							render=":cloneFolderForm" />
+				</h:commandButton>
 
-		<div>
-			<h:link value="Tillbaka" outcome="view" />
-		</div>
+				<h:button styleClass="btn" value="#{bundle['go-back']}" outcome="view" />
+			</div>
 
-	</h:form>
+			<div>
+
+			</div>
+
+		</h:form>
+
 
 	</h:body>
+
 </f:view>

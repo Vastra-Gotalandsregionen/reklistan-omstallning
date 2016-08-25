@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import se.vgregion.reklistan.exception.CloneFolderException;
+import se.vgregion.reklistan.exception.PublishFolderException;
 import se.vgregion.reklistan.service.FolderService;
 import se.vgregion.reklistan.util.FacesUtil;
 
@@ -21,11 +21,11 @@ import java.util.Locale;
 /**
  * @author Erik Andersson
  */
-@Component(value = "cloneFolderBackingBean")
+@Component(value = "publishFolderBackingBean")
 @Scope(value = "request")
-public class CloneFolderBackingBean {
+public class PublishFolderBackingBean {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CloneFolderBackingBean.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(PublishFolderBackingBean.class);
 
     @Autowired
     private FacesUtil facesUtil;
@@ -48,9 +48,9 @@ public class CloneFolderBackingBean {
 
     private List<JournalFolder> rootFolders;
 
-    private long folderIdToClone;
+    private long folderIdToPublish;
 
-    private String folderNameNew;
+    private long folderIdToUnpublish;
 
     public List<JournalFolder> getRootFolders() {
         return rootFolders;
@@ -60,33 +60,33 @@ public class CloneFolderBackingBean {
         this.rootFolders = rootFolders;
     }
 
-    public long getFolderIdToClone() {
-        return folderIdToClone;
+    public long getFolderIdToPublish() {
+        return folderIdToPublish;
     }
 
-    public void setFolderIdToClone(long folderIdToClone) {
-        this.folderIdToClone = folderIdToClone;
+    public void setFolderIdToPublish(long folderIdToPublish) {
+        this.folderIdToPublish = folderIdToPublish;
     }
 
-    public String getFolderNameNew() {
-        return folderNameNew;
+    public long getFolderIdToUnpublish() {
+        return folderIdToUnpublish;
     }
 
-    public void setFolderNameNew(String folderNameNew) {
-        this.folderNameNew = folderNameNew;
+    public void setFolderIdToUnpublish(long folderIdToUnpublish) {
+        this.folderIdToUnpublish = folderIdToUnpublish;
     }
 
-    public String cloneFolder() {
+    public String publishFolder() {
         String returnView = null;
 
-        try {
-            folderService.cloneFolder(folderIdToClone, folderNameNew);
 
-            addFacesMessage("clone-folder-success", FacesMessage.SEVERITY_INFO);
-        } catch (CloneFolderException e) {
+        try {
+            folderService.unpublishOldAndPublishNew(folderIdToUnpublish, folderIdToPublish);
+
+            addFacesMessage("publish-folder-success", FacesMessage.SEVERITY_INFO);
+        } catch (PublishFolderException e) {
             addFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR);
         }
-
         return returnView;
     }
 

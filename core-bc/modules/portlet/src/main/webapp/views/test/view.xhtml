@@ -13,27 +13,14 @@
 	<h:head />
 	<h:body>
 
-    <h2>
-      REK-listan omställning
-    </h2>
+    <h3>
+		<h:outputText value="#{bundle['reklistan-year-end-adjustment']}" />
+    </h3>
 
-	<p>
-		<h:link value="Klona folder" outcome="clone_folder" />
-	</p>
-	<p>
-		<h:link value="Publicera folder" outcome="publish_folder" />
-	</p>
-
-
-	<ui:fragment rendered="false">
-		<!-- Testing -->
-		<p>
-			TestString is: #{omstallningBackingBean.getTestString()}
-		</p>
-		<p>
-			TestString is: #{omstallningBackingBean.getTestStringFromService()}
-		</p>
-	</ui:fragment>
+	<div class="button-holder">
+		<h:button styleClass="btn" value="#{bundle['clone-folder']}" outcome="clone_folder" />
+		<h:button styleClass="btn" value="#{bundle['publish-folder']}" outcome="publish_folder" />
+	</div>
 
 	</h:body>
 </f:view>
