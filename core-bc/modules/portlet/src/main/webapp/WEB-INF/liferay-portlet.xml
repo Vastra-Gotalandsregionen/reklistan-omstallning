@@ -5,7 +5,7 @@
 <liferay-portlet-app>
 
     <portlet>
-        <portlet-name>reklistan-omstallning-test</portlet-name>
+        <portlet-name>reklistan-omstallning</portlet-name>
         <action-url-redirect>true</action-url-redirect>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>
