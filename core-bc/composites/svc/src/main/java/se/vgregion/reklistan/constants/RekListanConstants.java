@@ -6,8 +6,10 @@ package se.vgregion.reklistan.constants;
 
 public interface RekListanConstants {
 
-    public static final String REVIEWER_ROLE_CUSTOM_FIELD = "reviewer-role";
+    public static final String LK_ROLE_NAME = "LK";
+    public static final String LK_SECRETARY_ROLE_NAME = "LK - Sekreterare";
 
+    public static final String REVIEWER_ROLE_CUSTOM_FIELD = "reviewer-role";
     public static final String REVIEWER_ROLE_SECRETARY_SUFFIX = " - Sekreterare";
 
     public static final String[] JOURNAL_ARTICLE_ACTIONS_ALL = new String[]{"ADD_DISCUSSION", "DELETE", "DELETE_DISCUSSION", "EXPIRE", "PERMISSIONS", "UPDATE", "UPDATE_DISCUSSION", "VIEW"};
