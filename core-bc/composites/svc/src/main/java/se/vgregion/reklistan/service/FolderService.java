@@ -170,6 +170,7 @@ public class FolderService {
 
             // Roles common to all articles
             Role ownerRole = getRoleByName(companyId, RoleConstants.OWNER);
+            Role userRole = getRoleByName(companyId, RoleConstants.USER);
             Role lkRole = getRoleByName(companyId, RekListanConstants.LK_ROLE_NAME);
             Role lkSecretaryRole = getRoleByName(companyId, RekListanConstants.LK_SECRETARY_ROLE_NAME);
 
@@ -180,6 +181,11 @@ public class FolderService {
             String[] folderActionsIds = new String[]{ActionKeys.VIEW};
             setFolderPermissions(folderToUnpublish, lkRole, folderActionsIds);
             setFolderPermissions(folderToUnpublish, lkSecretaryRole, folderActionsIds);
+
+            // Set folder permissions to view for USER
+            String[] userFolderActionsIds = new String[]{ActionKeys.VIEW};
+            setFolderPermissions(folderToUnpublish, userRole, userFolderActionsIds);
+
 
             // Get articles
             List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(groupId, folderIdToUnpublish);
@@ -195,6 +201,10 @@ public class FolderService {
                 // Add LK Secretary permissions (VIEW)
                 String[] lkSecretaryActionsIds = new String[]{ActionKeys.VIEW};
                 setArticlePermissions(article, lkSecretaryRole, lkSecretaryActionsIds);
+
+                // Add User permissions (VIEW)
+                String[] userActionsIds = new String[]{ActionKeys.VIEW};
+                setArticlePermissions(article, userRole, userActionsIds);
             }
 
             // Unpublish subfolders recursively
