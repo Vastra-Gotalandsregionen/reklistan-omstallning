@@ -2,13 +2,11 @@ package se.vgregion.reklistan.service;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.workflow.WorkflowConstants;
 import com.liferay.portal.model.*;
 import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portal.service.UserLocalServiceUtil;
 import com.liferay.portlet.expando.model.ExpandoTableConstants;
 import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
@@ -266,16 +264,7 @@ public class FolderService {
 
                 // Copy only latest article
                 if(isLatestVersion) {
-                    //article.getStatus()
-                    //WorkflowConstants.STATUS_APPROVED
-                    boolean isLatestApprovedVersion = article.getStatus() == WorkflowConstants.STATUS_APPROVED;
-
-                    LOGGER.info("copiedArticle isLatestApprovedVersion: " + isLatestApprovedVersion + " with name: " + article.getTitle("sv_SE"));
-
-
                     JournalArticle copiedArticle = JournalArticleLocalServiceUtil.copyArticle(article.getUserId(), article.getGroupId(), article.getArticleId(), "", true, article.getVersion());
-
-                    //LOGGER.info("copiedArticle version: " + article.getVersion() + " with name: " + copiedArticle.getTitle("sv_SE"));
 
                     // After copy, move to correct folder (i.e. the newly created folder)
                     JournalArticle movedArticle = JournalArticleLocalServiceUtil.moveArticle(copiedArticle.getGroupId(), copiedArticle.getArticleId(), newFolder.getFolderId());
