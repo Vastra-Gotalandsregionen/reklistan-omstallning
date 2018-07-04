@@ -11,12 +11,12 @@ Generation time : 2015-01-14 09:02:50 CET
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>se.vgregion.reklistan</groupId>
-    <artifactId>reklistan-omstallning-core-bc</artifactId>
+    <artifactId>vatskenutrition-omstallning-core-bc</artifactId>
     <version>1.0-SNAPSHOT</version>
     <relativePath>../../pom.xml</relativePath>
   </parent>
   <groupId>se.vgregion.reklistan</groupId>
-  <artifactId>reklistan-omstallning-core-bc-composite-types</artifactId>
+  <artifactId>vatskenutrition-omstallning-core-bc-composite-types</artifactId>
   <packaging>jar</packaging>
   <name>${project.artifactId}</name>
 

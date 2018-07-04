@@ -14,8 +14,8 @@
              id="reklistan-omstallning-bc-module-portlet">
 
     <portlet>
-      <portlet-name>reklistan-omstallning</portlet-name>
-      <display-name>reklistan-omstallning</display-name>
+      <portlet-name>vatskenutrition-omstallning</portlet-name>
+      <display-name>vatskenutrition-omstallning</display-name>
       <portlet-class>com.liferay.faces.bridge.GenericLiferayFacesPortlet</portlet-class>
 
       <init-param>
@@ -29,9 +29,9 @@
       </supports>
 
       <portlet-info>
-          <title>REKlistan omstallning</title>
-          <short-title>REKlistan omstallning</short-title>
-          <keywords>REKlistan omstallning</keywords>
+          <title>Vätskenutrition omställning</title>
+          <short-title>Vätskenutrition omställning</short-title>
+          <keywords>Vätskenutrition omställning</keywords>
       </portlet-info>
 
     </portlet>

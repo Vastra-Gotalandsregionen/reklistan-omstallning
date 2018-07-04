@@ -7,8 +7,6 @@ import com.liferay.portal.security.permission.ActionKeys;
 import com.liferay.portal.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.service.RoleLocalServiceUtil;
 import com.liferay.portal.service.ServiceContext;
-import com.liferay.portlet.expando.model.ExpandoTableConstants;
-import com.liferay.portlet.expando.service.ExpandoValueLocalServiceUtil;
 import com.liferay.portlet.journal.DuplicateFolderNameException;
 import com.liferay.portlet.journal.model.JournalArticle;
 import com.liferay.portlet.journal.service.JournalArticleLocalServiceUtil;
@@ -20,7 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 
 import com.liferay.portlet.journal.model.JournalFolder;
-import se.vgregion.reklistan.constants.RekListanConstants;
+import se.vgregion.reklistan.constants.VatskenutritionConstants;
 import se.vgregion.reklistan.exception.CloneFolderException;
 import se.vgregion.reklistan.exception.PublishFolderException;
 
@@ -35,7 +33,6 @@ import java.util.List;
 public class FolderService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(FolderService.class);
-
 
     @PostConstruct
     public void init() {
@@ -115,16 +112,19 @@ public class FolderService {
             // Roles common to all articles
             Role ownerRole = getRoleByName(companyId, RoleConstants.OWNER);
             Role guestRole = getRoleByName(companyId, RoleConstants.GUEST);
-            Role userRole = getRoleByName(companyId, RoleConstants.USER);
-            Role lkSecretaryRole = getRoleByName(companyId, RekListanConstants.LK_SECRETARY_ROLE_NAME);
+            Role readRole = getRoleByName(companyId, VatskenutritionConstants.READ_ROLE_NAME);
+            Role writeRole = getRoleByName(companyId, VatskenutritionConstants.WRITE_ROLE_NAME);
+            Role publishRole = getRoleByName(companyId, VatskenutritionConstants.PUBLISH_ROLE_NAME);
 
             // Delete all folder permissions
             deleteAllFolderPermissions(folderToPublish, ownerRole.getRoleId());
 
-            // Set folder permissions to view for User and guestrole
+            // Set view folder permissions
             String[] folderActionsIds = new String[]{ActionKeys.VIEW};
-            setFolderPermissions(folderToPublish, userRole, folderActionsIds);
-            setFolderPermissions(folderToPublish, guestRole, folderActionsIds);
+            setFolderPermissions(folderToPublish, ownerRole, folderActionsIds);
+            setFolderPermissions(folderToPublish, readRole, folderActionsIds);
+            setFolderPermissions(folderToPublish, writeRole, folderActionsIds);
+            setFolderPermissions(folderToPublish, publishRole, folderActionsIds);
 
             // Get articles
             List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(groupId, folderIdToPublish);
@@ -134,18 +134,15 @@ public class FolderService {
                 // Remove all permissions on article
                 deleteAllArticlePermissions(article, ownerRole.getRoleId());
 
-                // Add Guest permissions (VIEW)
-                String[] guestActionsIds = new String[]{ActionKeys.VIEW};
-                setArticlePermissions(article, guestRole, guestActionsIds);
+                // Add view permissions
+                String[] viewActionIds = new String[]{ActionKeys.VIEW};
+                setArticlePermissions(article, guestRole, viewActionIds);
+                setArticlePermissions(article, readRole, viewActionIds);
+                setArticlePermissions(article, writeRole, viewActionIds);
 
-                // Add User permissions (VIEW)
-                String[] userActionsIds = new String[]{ActionKeys.VIEW};
-                setArticlePermissions(article, userRole, userActionsIds);
-
-
-                // Add LK Secretary permissions (VIEW and UPDATE)
-                String[] lkSecretaryActionsIds = new String[]{ActionKeys.VIEW, ActionKeys.UPDATE};
-                setArticlePermissions(article, lkSecretaryRole, lkSecretaryActionsIds);
+                // Add view and update permissions (only publisher can make updates to published articles
+                String[] updateActionsIds = new String[]{ActionKeys.VIEW, ActionKeys.UPDATE};
+                setArticlePermissions(article, publishRole, updateActionsIds);
             }
 
             // Publish subfolders recursively
@@ -168,22 +165,20 @@ public class FolderService {
 
             // Roles common to all articles
             Role ownerRole = getRoleByName(companyId, RoleConstants.OWNER);
-            Role userRole = getRoleByName(companyId, RoleConstants.USER);
-            Role lkRole = getRoleByName(companyId, RekListanConstants.LK_ROLE_NAME);
-            Role lkSecretaryRole = getRoleByName(companyId, RekListanConstants.LK_SECRETARY_ROLE_NAME);
+            Role guestRole = getRoleByName(companyId, RoleConstants.GUEST);
+            Role readRole = getRoleByName(companyId, VatskenutritionConstants.READ_ROLE_NAME);
+            Role writeRole = getRoleByName(companyId, VatskenutritionConstants.WRITE_ROLE_NAME);
+            Role publishRole = getRoleByName(companyId, VatskenutritionConstants.PUBLISH_ROLE_NAME);
 
             // Delete all folder permissions
             deleteAllFolderPermissions(folderToUnpublish, ownerRole.getRoleId());
 
-            // Set folder permissions to view for LK and LK secretary
+            // Set view folder permissions
             String[] folderActionsIds = new String[]{ActionKeys.VIEW};
-            setFolderPermissions(folderToUnpublish, lkRole, folderActionsIds);
-            setFolderPermissions(folderToUnpublish, lkSecretaryRole, folderActionsIds);
-
-            // Set folder permissions to view for USER
-            String[] userFolderActionsIds = new String[]{ActionKeys.VIEW};
-            setFolderPermissions(folderToUnpublish, userRole, userFolderActionsIds);
-
+            setFolderPermissions(folderToUnpublish, ownerRole, folderActionsIds);
+            setFolderPermissions(folderToUnpublish, readRole, folderActionsIds);
+            setFolderPermissions(folderToUnpublish, writeRole, folderActionsIds);
+            setFolderPermissions(folderToUnpublish, publishRole, folderActionsIds);
 
             // Get articles
             List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(groupId, folderIdToUnpublish);
@@ -192,17 +187,11 @@ public class FolderService {
                 // Remove all permissions on article
                 deleteAllArticlePermissions(article, ownerRole.getRoleId());
 
-                // Add LK permissions (VIEW)
+                // Add view permissions
                 String[] lkActionsIds = new String[]{ActionKeys.VIEW};
-                setArticlePermissions(article, lkRole, lkActionsIds);
-
-                // Add LK Secretary permissions (VIEW)
-                String[] lkSecretaryActionsIds = new String[]{ActionKeys.VIEW};
-                setArticlePermissions(article, lkSecretaryRole, lkSecretaryActionsIds);
-
-                // Add User permissions (VIEW)
-                String[] userActionsIds = new String[]{ActionKeys.VIEW};
-                setArticlePermissions(article, userRole, userActionsIds);
+                setArticlePermissions(article, readRole, lkActionsIds);
+                setArticlePermissions(article, writeRole, lkActionsIds);
+                setArticlePermissions(article, publishRole, lkActionsIds);
             }
 
             // Unpublish subfolders recursively
@@ -235,9 +224,9 @@ public class FolderService {
             // Roles common to all articles
             Role ownerRole = getRoleByName(companyId, RoleConstants.OWNER);
             Role guestRole = getRoleByName(companyId, RoleConstants.GUEST);
-            Role userRole = getRoleByName(companyId, RoleConstants.USER);
-            Role lkRole = getRoleByName(companyId, RekListanConstants.LK_ROLE_NAME);
-            Role lkSecretaryRole = getRoleByName(companyId, RekListanConstants.LK_SECRETARY_ROLE_NAME);
+            Role readRole = getRoleByName(companyId, VatskenutritionConstants.READ_ROLE_NAME);
+            Role writeRole = getRoleByName(companyId, VatskenutritionConstants.WRITE_ROLE_NAME);
+            Role publishRole = getRoleByName(companyId, VatskenutritionConstants.PUBLISH_ROLE_NAME);
 
             if(isRoot) {
                 newFolder = JournalFolderLocalServiceUtil.fetchFolder(copyToFolderId);
@@ -249,10 +238,22 @@ public class FolderService {
             // Delete all folder permissions
             deleteAllFolderPermissions(newFolder, ownerRole.getRoleId());
 
-            // Set folder permissions to view for User and guestrole
-            String[] folderActionsIds = new String[]{ActionKeys.VIEW};
-            setFolderPermissions(newFolder, userRole, folderActionsIds);
-            setFolderPermissions(newFolder, guestRole, folderActionsIds);
+            // Set folder permissions to view for the application specific roles
+            String[] folderViewActionsIds = new String[]{ActionKeys.VIEW};
+            setFolderPermissions(newFolder, readRole, folderViewActionsIds);
+
+            // TODO It's questionable whether we should allow users to create subfolders since the permissions would then be arbitrary.
+//            String[] folderAddFolderActionsIds = new String[]{ActionKeys.VIEW, ActionKeys.ADD_SUBFOLDER, ActionKeys.DELETE};
+            setFolderPermissions(newFolder, writeRole, folderViewActionsIds);
+            setFolderPermissions(newFolder, publishRole, folderViewActionsIds);
+
+            if (!isRoot) {
+                // If it's a subfolder the write and publish role should be able to add articles. This will overwrite
+                // permissions for write and publish role set just before.
+                String[] actionIds = {ActionKeys.VIEW, ActionKeys.ADD_ARTICLE};
+                setFolderPermissions(newFolder, writeRole, actionIds);
+                setFolderPermissions(newFolder, publishRole, actionIds);
+            }
 
             // Get articles
             List<JournalArticle> articles = JournalArticleLocalServiceUtil.getArticles(groupId, copyFromFolderId);
@@ -269,32 +270,20 @@ public class FolderService {
                     // After copy, move to correct folder (i.e. the newly created folder)
                     JournalArticle movedArticle = JournalArticleLocalServiceUtil.moveArticle(copiedArticle.getGroupId(), copiedArticle.getArticleId(), newFolder.getFolderId());
 
-                    // Reviewer Role (article specific)
-                    String reviewerRoleName = getReviewerRoleName(movedArticle);
-                    Role reviewerRole = getRoleByName(companyId, reviewerRoleName);
-
-                    // Reviewer Secretary Role (article specific)
-                    String reviewerSecretaryRoleName = reviewerRoleName + RekListanConstants.REVIEWER_ROLE_SECRETARY_SUFFIX;
-                    Role reviewerSecretaryRole = getRoleByName(companyId, reviewerSecretaryRoleName);
-
                     // Remove all permissions on movedArticle
                     deleteAllArticlePermissions(movedArticle, ownerRole.getRoleId());
 
-                    // Add Reviewer permissions (VIEW)
-                    String[] reviwerActionsIds = new String[]{ActionKeys.VIEW};
-                    setArticlePermissions(movedArticle, reviewerRole, reviwerActionsIds);
+                    // Add view permissions
+                    String[] viewActionsIds = new String[]{ActionKeys.VIEW};
+                    setArticlePermissions(movedArticle, guestRole, viewActionsIds);
+                    setArticlePermissions(movedArticle, readRole, viewActionsIds);
 
-                    // Add Reviewer-Secretary permissions (VIEW and UPDATE)
-                    String[] reviewerSecretaryActionsIds = new String[]{ActionKeys.VIEW, ActionKeys.UPDATE};
-                    setArticlePermissions(movedArticle, reviewerSecretaryRole, reviewerSecretaryActionsIds);
+                    // Add write permissions
+                    String[] writeActionsIds = new String[]{ActionKeys.VIEW, ActionKeys.UPDATE};
+                    setArticlePermissions(movedArticle, writeRole, writeActionsIds);
+                    setArticlePermissions(movedArticle, publishRole, writeActionsIds);
 
-                    // Add LK permissions (VIEW)
-                    String[] lkActionsIds = new String[]{ActionKeys.VIEW};
-                    setArticlePermissions(movedArticle, lkRole, lkActionsIds);
-
-                    // Add LK Secretary permissions (VIEW and UPDATE)
-                    String[] lkSecretaryActionsIds = new String[]{ActionKeys.VIEW, ActionKeys.UPDATE};
-                    setArticlePermissions(movedArticle, lkSecretaryRole, lkSecretaryActionsIds);
+                    continue;
                 }
             }
 
@@ -380,22 +369,6 @@ public class FolderService {
         }
 
         return role;
-    }
-
-    private String getReviewerRoleName(JournalArticle article) {
-        String reviewerRoleName = "";
-
-        try {
-            reviewerRoleName = ExpandoValueLocalServiceUtil.getData(
-                    article.getCompanyId(), JournalArticle.class.getName(),
-                    ExpandoTableConstants.DEFAULT_TABLE_NAME, RekListanConstants.REVIEWER_ROLE_CUSTOM_FIELD,
-                    article.getId(), "");
-
-        } catch (SystemException | PortalException e) {
-            throw new RuntimeException("getReviewerRoleName failed for article with id" + article.getId(), e);
-        }
-
-        return reviewerRoleName;
     }
 
     private void setArticlePermissions(JournalArticle article, Role role, String[] actionIds) {
