@@ -1,7 +1,7 @@
 package se.vgregion.reklistan.backingbean;
 
 
-import com.liferay.portlet.journal.model.JournalFolder;
+import com.liferay.journal.model.JournalFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

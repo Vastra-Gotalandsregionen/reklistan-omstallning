@@ -72,6 +72,16 @@ Generation time : 2015-01-14 09:02:50 CET
             <groupId>${project.groupId}</groupId>
             <artifactId>reklistan-omstallning-core-bc-composite-svc</artifactId>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -81,15 +91,23 @@ Generation time : 2015-01-14 09:02:50 CET
         </dependency>
         <dependency>
             <groupId>com.liferay.portal</groupId>
-            <artifactId>portal-service</artifactId>
+            <artifactId>com.liferay.portal.kernel</artifactId>
             <scope>provided</scope>
+            <version>2.50.0</version>
         </dependency>
         <!-- To get tag assistance in your IDE -->
         <dependency>
             <groupId>com.liferay.portal</groupId>
-            <artifactId>util-taglib</artifactId>
+            <artifactId>com.liferay.util.taglib</artifactId>
+            <version>2.8.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.liferay</groupId>
+            <artifactId>com.liferay.journal.api</artifactId>
+            <version>3.0.2</version>
             <scope>provided</scope>
         </dependency>
+
         <dependency>
             <groupId>taglibs</groupId>
             <artifactId>standard</artifactId>
@@ -103,6 +121,16 @@ Generation time : 2015-01-14 09:02:50 CET
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <!--
           We use a Servlet Filter from spring-web to control UTF-8 encodings.
@@ -110,14 +138,44 @@ Generation time : 2015-01-14 09:02:50 CET
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>xml-apis</groupId>
+                    <artifactId>xml-apis</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>stax</groupId>
+                    <artifactId>stax-api</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -141,18 +199,28 @@ Generation time : 2015-01-14 09:02:50 CET
 
         <dependency>
             <groupId>com.liferay.faces</groupId>
-            <artifactId>liferay-faces-alloy</artifactId>
-            <version>4.2.5-ga6</version>
+            <artifactId>com.liferay.faces.bridge.api</artifactId>
+            <version>4.1.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.liferay.faces</groupId>
+            <artifactId>com.liferay.faces.bridge.ext</artifactId>
+            <version>5.0.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.liferay.faces</groupId>
+            <!--
             <artifactId>liferay-faces-bridge-impl</artifactId>
-            <version>4.2.5-ga6</version>
+            -->
+            <artifactId>com.liferay.faces.bridge.impl</artifactId>
+            <version>4.1.0</version>
         </dependency>
         <dependency>
             <groupId>com.liferay.faces</groupId>
-            <artifactId>liferay-faces-portal</artifactId>
-            <version>4.2.5-ga6</version>
+            <artifactId>com.liferay.faces.portal</artifactId>
+            <version>3.0.1</version>
         </dependency>
 
         <dependency>
