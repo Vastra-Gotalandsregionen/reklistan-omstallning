@@ -16,7 +16,7 @@
     <portlet>
       <portlet-name>vatskenutrition-omstallning</portlet-name>
       <display-name>vatskenutrition-omstallning</display-name>
-      <portlet-class>com.liferay.faces.bridge.GenericLiferayFacesPortlet</portlet-class>
+      <portlet-class>com.liferay.faces.bridge.ext.GenericLiferayFacesPortlet</portlet-class>
 
       <init-param>
           <name>javax.portlet.faces.defaultViewId.view</name>
