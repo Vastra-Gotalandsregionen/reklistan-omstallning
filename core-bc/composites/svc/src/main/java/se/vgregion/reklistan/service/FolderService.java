@@ -7,6 +7,7 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -15,6 +16,7 @@ import com.liferay.portal.kernel.security.permission.ActionKeys;
 import com.liferay.portal.kernel.service.ResourcePermissionLocalServiceUtil;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.StringPool;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -26,7 +28,10 @@ import se.vgregion.reklistan.exception.CloneFolderException;
 import se.vgregion.reklistan.exception.PublishFolderException;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * @author Erik Andersson
@@ -217,7 +222,6 @@ public class FolderService {
             long groupId = copyFromFolder.getGroupId();
             long companyId = copyFromFolder.getCompanyId();
             String newFolderDescription = "";
-            String newFolderName = copyFromFolder.getName();
 
             ServiceContext serviceContext = new ServiceContext();
             serviceContext.setScopeGroupId(groupId);
@@ -235,7 +239,7 @@ public class FolderService {
                 newFolder = JournalFolderLocalServiceUtil.fetchFolder(copyToFolderId);
             } else {
                 // Clone folder
-                newFolder = createFolder(copyFromFolder.getUserId(), groupId, copyToFolderId, newFolderName, newFolderDescription);
+                newFolder = createFolder(copyFromFolder.getUserId(), groupId, copyToFolderId, copyFromFolder.getName(), newFolderDescription);
             }
 
             // Delete all folder permissions
@@ -270,6 +274,8 @@ public class FolderService {
                 if(isLatestVersion) {
                     JournalArticle copiedArticle = JournalArticleLocalServiceUtil.copyArticle(article.getUserId(), article.getGroupId(), article.getArticleId(), "", true, article.getVersion());
 
+                    updateTitleMap(serviceContext, copiedArticle);
+
                     // After copy, move to correct folder (i.e. the newly created folder)
                     JournalArticle movedArticle = JournalArticleLocalServiceUtil.moveArticle(copiedArticle.getGroupId(), copiedArticle.getArticleId(), newFolder.getFolderId());
 
@@ -302,6 +308,32 @@ public class FolderService {
             e.printStackTrace();
         }
 
+    }
+
+    private void updateTitleMap(ServiceContext serviceContext, JournalArticle copiedArticle) throws PortalException {
+        Map<Locale, String> articleTitleMap = copiedArticle.getTitleMap();
+
+        Map<Locale, String> titleMapWithoutDuplicateSuffix = new HashMap<>();
+
+        for (Map.Entry<Locale, String> localeTitleEntry : articleTitleMap.entrySet()) {
+            String duplicateSuffix = StringPool.SPACE + LanguageUtil.get(localeTitleEntry.getKey(), "duplicate");
+            String[] split = localeTitleEntry.getValue().split(duplicateSuffix);
+            titleMapWithoutDuplicateSuffix.put(localeTitleEntry.getKey(), split[0]);
+        }
+
+        copiedArticle.setTitleMap(titleMapWithoutDuplicateSuffix);
+
+        JournalArticleLocalServiceUtil.updateArticle(
+                copiedArticle.getUserId(),
+                copiedArticle.getGroupId(),
+                copiedArticle.getFolderId(),
+                copiedArticle.getArticleId(),
+                copiedArticle.getVersion(),
+                titleMapWithoutDuplicateSuffix,
+                copiedArticle.getDescriptionMap(),
+                copiedArticle.getContent(),
+                copiedArticle.getLayoutUuid(),
+                serviceContext);
     }
 
     private JournalFolder createFolder(long userId, long groupId, long parentFolderId, String folderName, String folderDescription) throws PortalException {
