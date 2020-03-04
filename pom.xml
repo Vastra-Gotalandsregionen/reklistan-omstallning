@@ -28,6 +28,19 @@
     <compileTarget>1.7</compileTarget>
     <spring.fw.version>3.2.14.RELEASE</spring.fw.version>
     <jsf.version>2.2.8</jsf.version>
+    <liferay.version>7.2.1</liferay.version>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.liferay.portal</groupId>
+        <artifactId>release.portal.bom</artifactId>
+        <version>${liferay.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
 </project>
