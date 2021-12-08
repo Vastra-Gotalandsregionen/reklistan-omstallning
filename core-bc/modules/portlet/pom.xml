@@ -198,27 +198,25 @@ Generation time : 2015-01-14 09:02:50 CET
         <dependency>
             <groupId>com.liferay.faces</groupId>
             <artifactId>com.liferay.faces.bridge.api</artifactId>
-            <version>4.1.0</version>
+            <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.liferay.faces</groupId>
+            <artifactId>com.liferay.faces.bridge.impl</artifactId>
+            <version>4.2.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.liferay.faces</groupId>
             <artifactId>com.liferay.faces.bridge.ext</artifactId>
-            <version>5.0.2</version>
+            <version>5.1.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.liferay.faces</groupId>
-            <!--
-            <artifactId>liferay-faces-bridge-impl</artifactId>
-            -->
-            <artifactId>com.liferay.faces.bridge.impl</artifactId>
-            <version>4.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.liferay.faces</groupId>
             <artifactId>com.liferay.faces.portal</artifactId>
-            <version>3.0.1</version>
+            <version>4.1.0</version>
         </dependency>
 
         <dependency>
