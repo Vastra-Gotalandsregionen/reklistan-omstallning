@@ -27,7 +27,7 @@
     <compileSource>1.7</compileSource>
     <compileTarget>1.7</compileTarget>
     <spring.fw.version>3.2.14.RELEASE</spring.fw.version>
-    <jsf.version>2.2.8</jsf.version>
+    <jsf.version>2.2.20</jsf.version>
     <liferay.version>7.2.1</liferay.version>
   </properties>
 
