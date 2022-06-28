@@ -86,6 +86,12 @@
         </dependency>
 
         <dependency>
+            <groupId>com.liferay</groupId>
+            <artifactId>com.liferay.petra.string</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
             <groupId>hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
             <scope>test</scope>
