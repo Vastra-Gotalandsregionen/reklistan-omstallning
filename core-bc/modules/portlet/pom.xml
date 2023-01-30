@@ -11,17 +11,17 @@ Generation time : 2015-01-14 09:02:50 CET
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>se.vgregion.reklistan</groupId>
-        <artifactId>vatskenutrition-omstallning-core-bc</artifactId>
+        <artifactId>aldrekompassen-omstallning-core-bc</artifactId>
         <version>1.0-SNAPSHOT</version>
         <relativePath>../../pom.xml</relativePath>
     </parent>
     <groupId>se.vgregion.reklistan</groupId>
-    <artifactId>vatskenutrition-omstallning-core-bc-module-portlet</artifactId>
+    <artifactId>aldrekompassen-omstallning-core-bc-module-portlet</artifactId>
     <packaging>war</packaging>
     <name>${project.artifactId}</name>
 
     <build>
-        <finalName>vatskenutrition-omstallning-portlet</finalName>
+        <finalName>aldrekompassen-omstallning-portlet</finalName>
         <plugins>
             <plugin>
                 <!-- Configure eclipse plug-in to generate a context root that does not have the version number on it -->
@@ -70,7 +70,7 @@ Generation time : 2015-01-14 09:02:50 CET
 
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>vatskenutrition-omstallning-core-bc-composite-svc</artifactId>
+            <artifactId>aldrekompassen-omstallning-core-bc-composite-svc</artifactId>
             <version>${project.version}</version>
             <exclusions>
                 <exclusion>

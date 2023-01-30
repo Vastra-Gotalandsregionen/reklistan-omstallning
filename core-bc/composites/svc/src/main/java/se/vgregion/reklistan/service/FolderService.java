@@ -23,7 +23,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 
-import se.vgregion.reklistan.constants.VatskenutritionConstants;
+import se.vgregion.reklistan.constants.AldrekompassenConstants;
 import se.vgregion.reklistan.exception.CloneFolderException;
 import se.vgregion.reklistan.exception.PublishFolderException;
 
@@ -120,9 +120,9 @@ public class FolderService {
             // Roles common to all articles
             Role ownerRole = getRoleByName(companyId, RoleConstants.OWNER);
             Role guestRole = getRoleByName(companyId, RoleConstants.GUEST);
-            Role readRole = getRoleByName(companyId, VatskenutritionConstants.READ_ROLE_NAME);
-            Role writeRole = getRoleByName(companyId, VatskenutritionConstants.WRITE_ROLE_NAME);
-            Role publishRole = getRoleByName(companyId, VatskenutritionConstants.PUBLISH_ROLE_NAME);
+            Role readRole = getRoleByName(companyId, AldrekompassenConstants.READ_ROLE_NAME);
+            Role writeRole = getRoleByName(companyId, AldrekompassenConstants.WRITE_ROLE_NAME);
+            Role publishRole = getRoleByName(companyId, AldrekompassenConstants.PUBLISH_ROLE_NAME);
 
             // Delete all folder permissions
             deleteAllFolderPermissions(folderToPublish, ownerRole.getRoleId());
@@ -174,9 +174,9 @@ public class FolderService {
             // Roles common to all articles
             Role ownerRole = getRoleByName(companyId, RoleConstants.OWNER);
             Role guestRole = getRoleByName(companyId, RoleConstants.GUEST);
-            Role readRole = getRoleByName(companyId, VatskenutritionConstants.READ_ROLE_NAME);
-            Role writeRole = getRoleByName(companyId, VatskenutritionConstants.WRITE_ROLE_NAME);
-            Role publishRole = getRoleByName(companyId, VatskenutritionConstants.PUBLISH_ROLE_NAME);
+            Role readRole = getRoleByName(companyId, AldrekompassenConstants.READ_ROLE_NAME);
+            Role writeRole = getRoleByName(companyId, AldrekompassenConstants.WRITE_ROLE_NAME);
+            Role publishRole = getRoleByName(companyId, AldrekompassenConstants.PUBLISH_ROLE_NAME);
 
             // Delete all folder permissions
             deleteAllFolderPermissions(folderToUnpublish, ownerRole.getRoleId());
@@ -231,9 +231,9 @@ public class FolderService {
             // Roles common to all articles
             Role ownerRole = getRoleByName(companyId, RoleConstants.OWNER);
             Role guestRole = getRoleByName(companyId, RoleConstants.GUEST);
-            Role readRole = getRoleByName(companyId, VatskenutritionConstants.READ_ROLE_NAME);
-            Role writeRole = getRoleByName(companyId, VatskenutritionConstants.WRITE_ROLE_NAME);
-            Role publishRole = getRoleByName(companyId, VatskenutritionConstants.PUBLISH_ROLE_NAME);
+            Role readRole = getRoleByName(companyId, AldrekompassenConstants.READ_ROLE_NAME);
+            Role writeRole = getRoleByName(companyId, AldrekompassenConstants.WRITE_ROLE_NAME);
+            Role publishRole = getRoleByName(companyId, AldrekompassenConstants.PUBLISH_ROLE_NAME);
 
             if(isRoot) {
                 newFolder = JournalFolderLocalServiceUtil.fetchFolder(copyToFolderId);

@@ -14,7 +14,7 @@
   </parent>
 
   <groupId>se.vgregion.reklistan</groupId>
-  <artifactId>vatskenutrition-omstallning-system</artifactId>
+  <artifactId>aldrekompassen-omstallning-system</artifactId>
   <packaging>pom</packaging>
   <version>1.0-SNAPSHOT</version>
   <name>${project.artifactId}</name>

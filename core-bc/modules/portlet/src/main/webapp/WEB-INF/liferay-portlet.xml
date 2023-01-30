@@ -5,7 +5,7 @@
 <liferay-portlet-app>
 
     <portlet>
-        <portlet-name>vatskenutrition-omstallning</portlet-name>
+        <portlet-name>aldrekompassen-omstallning</portlet-name>
         <action-url-redirect>true</action-url-redirect>
         <instanceable>false</instanceable>
         <requires-namespaced-parameters>false</requires-namespaced-parameters>

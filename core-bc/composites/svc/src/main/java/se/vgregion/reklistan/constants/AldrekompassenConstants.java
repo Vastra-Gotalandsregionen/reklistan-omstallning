@@ -4,7 +4,7 @@ package se.vgregion.reklistan.constants;
  * @author Erik Andersson - Monator Technologies AB
  */
 
-public interface VatskenutritionConstants {
+public interface AldrekompassenConstants {
 
     public static final String READ_ROLE_NAME = "Läsa artiklar";
     public static final String WRITE_ROLE_NAME = "Skriva artiklar";
