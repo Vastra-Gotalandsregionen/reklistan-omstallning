@@ -1,0 +1,38 @@
+.ui-calendar {
+  display: block;
+
+  &.ui-trigger-calendar {
+    display: flex;
+
+    input {
+      flex-grow: 1;
+
+      &.hasDatepicker {}
+    }
+
+    .ui-datepicker-trigger {
+      background: transparent;
+      border: 1px solid #ced4da;
+      border-left-width: 0;
+      color: #495057;
+      display: flex;
+      margin: 0;
+      padding: 0;
+      align-items: center;
+      justify-content: center;
+
+      .ui-icon {
+        margin: 0;
+        padding: 0;
+        position: static;
+      }
+
+      .ui-button-text {
+        display: none;
+      }
+
+    }
+
+  }
+
+}

@@ -1,0 +1,39 @@
+.ui-accordion {
+
+  .ui-accordion-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+
+    > .ui-icon {
+      margin: 0 1.0rem 0 0;
+    }
+
+    > * {
+      flex-grow: 1;
+
+      &.ui-icon,
+      &.ui-panel-titlebar-icon {
+        flex-grow: 0;
+      }
+    }
+
+    //> .ui-icon,
+    //> .ui-panel-titlebar-icon {
+    //  flex-grow: 0;
+    //}
+
+    //> * {
+    //  &:not(.ui-icon),
+    //  &:not(.ui-panel-titlebar-icon){}
+    //}
+    //
+    //> :not(:has(.ui-icon)),
+    //> :not(:has(.ui-panel-titlebar-icon)) {
+    //  flex-grow: 1;
+    //}
+
+
+  }
+
+}

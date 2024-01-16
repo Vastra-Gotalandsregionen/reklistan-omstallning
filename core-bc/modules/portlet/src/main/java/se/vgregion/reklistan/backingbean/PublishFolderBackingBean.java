@@ -50,8 +50,6 @@ public class PublishFolderBackingBean {
 
     private long folderIdToPublish;
 
-    private long folderIdToUnpublish;
-
     public List<JournalFolder> getRootFolders() {
         return rootFolders;
     }
@@ -68,26 +66,18 @@ public class PublishFolderBackingBean {
         this.folderIdToPublish = folderIdToPublish;
     }
 
-    public long getFolderIdToUnpublish() {
-        return folderIdToUnpublish;
-    }
-
-    public void setFolderIdToUnpublish(long folderIdToUnpublish) {
-        this.folderIdToUnpublish = folderIdToUnpublish;
-    }
-
     public String publishFolder() {
-        String returnView = null;
-
+        System.out.println("PublishFolderBackingBean - publishFolder");
 
         try {
-            folderService.unpublishOldAndPublishNew(folderIdToUnpublish, folderIdToPublish);
+            folderService.publishFolder(folderIdToPublish);
 
             addFacesMessage("publish-folder-success", FacesMessage.SEVERITY_INFO);
         } catch (PublishFolderException e) {
             addFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR);
         }
-        return returnView;
+
+        return "publish_folder?faces-redirect=true&includeViewParams=true";
     }
 
     @PostConstruct

@@ -1,0 +1,25 @@
+.ui-fieldset {
+  border: none;
+  background: transparent;
+  color: var(--body-color);
+  margin-bottom: 1rem;
+  padding: 0;
+  border-radius: 0;
+
+  .ui-fieldset-legend {
+    background: var(--gray-200);
+    border: none;
+    border-radius: 0;
+    color: var(--body-color);
+    font-weight: 400;
+    margin: 0;
+    padding: 0.25rem 0.5rem;
+    transition: none;
+  }
+
+  .ui-fieldset-content {
+    border: 1px solid var(--gray-200);
+    padding: 1rem;
+  }
+
+}

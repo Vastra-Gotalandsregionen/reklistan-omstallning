@@ -63,6 +63,59 @@ Generation time : 2015-01-14 09:02:50 CET
                     </archive>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>com.liferay</groupId>
+                <artifactId>com.liferay.css.builder</artifactId>
+                <version>3.1.4</version>
+                <executions>
+                    <execution>
+                        <phase>generate-resources</phase>
+                        <goals>
+                            <goal>build</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <baseDir>src/main/webapp/WEB-INF/css</baseDir>
+                    <outputDirName>${project.build.directory}/${project.build.finalName}/css</outputDirName>
+                    <precision>9</precision>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <excludes>
+                        <exclude>**/META-INF/resources/**/.sass-cache/</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>copy</goal>
+                        </goals>
+                        <configuration>
+                            <artifactItems>
+                                <artifactItem>
+                                    <groupId>com.liferay</groupId>
+                                    <artifactId>com.liferay.frontend.css.common</artifactId>
+                                    <version>2.0.4</version>
+                                </artifactItem>
+                            </artifactItems>
+                            <outputDirectory>${project.build.directory}/deps</outputDirectory>
+                            <stripVersion>true</stripVersion>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
         </plugins>
     </build>
 
@@ -87,6 +140,7 @@ Generation time : 2015-01-14 09:02:50 CET
         <dependency>
             <groupId>javax.portlet</groupId>
             <artifactId>portlet-api</artifactId>
+            <version>2.0</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -103,7 +157,6 @@ Generation time : 2015-01-14 09:02:50 CET
         <dependency>
             <groupId>com.liferay</groupId>
             <artifactId>com.liferay.journal.api</artifactId>
-            <version>4.5.0</version>
             <scope>provided</scope>
         </dependency>
 
@@ -184,6 +237,74 @@ Generation time : 2015-01-14 09:02:50 CET
             <scope>provided</scope>
         </dependency>
 
+        <!-- JSF and facelet dependencies -->
+        <dependency>
+            <groupId>javax.enterprise</groupId>
+            <artifactId>cdi-api</artifactId>
+            <version>1.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.el</groupId>
+            <artifactId>el-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>javax.faces</groupId>
+            <artifactId>javax.faces-api</artifactId>
+            <version>2.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish</groupId>
+            <artifactId>javax.faces</artifactId>
+            <version>2.2.20</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-api</artifactId>
+            <version>${jsf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.faces</groupId>
+            <artifactId>jsf-impl</artifactId>
+            <version>${jsf.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.liferay.faces</groupId>
+            <artifactId>com.liferay.faces.bridge.api</artifactId>
+            <version>4.3.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.liferay.faces</groupId>
+            <artifactId>com.liferay.faces.bridge.impl</artifactId>
+            <version>4.3.0</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.liferay.faces</groupId>
+            <artifactId>com.liferay.faces.bridge.ext</artifactId>
+            <version>6.1.2</version>
+            <scope>runtime</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.liferay.faces</groupId>
+            <artifactId>com.liferay.faces.portal</artifactId>
+            <version>4.1.1</version>
+        </dependency>
+
+        <!-- Prime Faces -->
+        <dependency>
+            <groupId>org.primefaces</groupId>
+            <artifactId>primefaces</artifactId>
+            <version>13.0.3</version>
+        </dependency>
+
+
+        <!--
         <dependency>
             <groupId>com.sun.faces</groupId>
             <artifactId>jsf-api</artifactId>
@@ -218,6 +339,7 @@ Generation time : 2015-01-14 09:02:50 CET
             <artifactId>com.liferay.faces.portal</artifactId>
             <version>3.0.1</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>javax.el</groupId>

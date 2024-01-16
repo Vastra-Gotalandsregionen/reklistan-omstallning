@@ -1,0 +1,8 @@
+.ui-blockui-content {
+  background: #fff;
+}
+
+.ui-blockui.blockui-fixed + .ui-blockui-content {
+  position: fixed !important;
+  top: 50vh !important;
+}

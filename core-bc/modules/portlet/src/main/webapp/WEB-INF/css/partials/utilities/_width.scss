@@ -1,0 +1,7 @@
+@for $i from 1 through 100 {
+
+  .width-#{$i} {
+    width: #{$i *1%};
+  }
+
+}

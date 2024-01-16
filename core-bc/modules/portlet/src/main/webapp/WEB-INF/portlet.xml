@@ -20,7 +20,7 @@
 
       <init-param>
           <name>javax.portlet.faces.defaultViewId.view</name>
-          <value>/views/test/view.xhtml</value>
+          <value>/WEB-INF/xhtml/omstallning/view.xhtml</value>
       </init-param>
 
       <supports>

@@ -1,0 +1,7 @@
+.ui-toggleswitch {
+  &.ui-toggleswitch-checked {
+    .ui-toggleswitch-slider {
+      background: var(--primary);
+    }
+  }
+}

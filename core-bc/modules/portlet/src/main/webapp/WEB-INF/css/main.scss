@@ -1,0 +1,12 @@
+.reklistan-omstallning-portlet {
+  @import "partials/utilities/variables";
+  @import "partials/utilities/bootstrap-icons";
+  @import "partials/utilities/mixins";
+  @import "partials/utilities/width";
+  @import "primefaces-vgr-theme/main";
+
+  @import "partials/atoms/input";
+
+  @import "partials/molecules/msg-wrap";
+
+}

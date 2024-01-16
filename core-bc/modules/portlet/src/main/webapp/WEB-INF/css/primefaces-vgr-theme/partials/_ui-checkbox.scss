@@ -1,0 +1,23 @@
+.ui-chkbox {
+  .ui-chkbox-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &.ui-state-active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: #fff;
+    }
+
+    .ui-chkbox-icon {
+      margin: 0;
+      position: static;
+    }
+  }
+
+  &.label-first {
+    flex-direction: row-reverse;
+  }
+
+}

@@ -1,0 +1,23 @@
+.ui-autocomplete {
+  display: flex;
+
+  .ui-button {
+    &.ui-autocomplete-dropdown {
+      background: var(--primary);
+      border-color: var(--primary);
+      align-items: center;
+      display: flex;
+      justify-content: center;
+
+      .ui-icon {
+        margin: 0;
+        position: static;
+      }
+
+      .ui-button-text {
+        padding: 0;
+      }
+    }
+  }
+
+}

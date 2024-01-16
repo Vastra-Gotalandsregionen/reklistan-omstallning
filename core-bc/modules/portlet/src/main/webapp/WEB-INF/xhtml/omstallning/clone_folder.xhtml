@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<f:view
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:reklistan="http://java.sun.com/jsf/composite/component/reklistan"
+>
+
+	<h:head />
+	<h:body>
+
+		<reklistan:navigation activeOutcome="clone_folder" />
+
+		<h:form id="cloneFolderForm">
+			<div class="msg-wrap">
+				<h:messages showSummary="true" showDetail="false" />
+			</div>
+
+			<div class="form-group">
+				<p:outputLabel for="@next" value="Mapp att kopiera från:"/>
+				<p:selectOneMenu id="copyFrom"
+								 name="copyFrom"
+								 styleClass="form-control"
+								 value="#{cloneFolderBackingBean.folderIdToClone}"
+								 required="true"
+								 requiredMessage="Du måste välja vilken mapp som skall kopieras"
+								 appendTo="@this"
+				>
+					<f:selectItem itemValue="#{null}" itemLabel="#{bundle['choose-folder']}" />
+					<f:selectItems value="#{cloneFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
+				</p:selectOneMenu>
+			</div>
+
+			<div class="form-group">
+				<p:outputLabel for="@next" value="Namn på ny mapp:"/>
+				<p:inputText id="newFolderName"
+							 value="#{cloneFolderBackingBean.folderNameNew}"
+							 required="true"
+							 requiredMessage="Du måste ange namn för den nya mapp"
+							 styleClass="form-control"
+							 placeholder="Ange namn..."/>
+			</div>
+
+			<hr />
+			<div class="button-row justify-content-center">
+				<p:commandButton styleClass="btn btn-primary"
+								 value="Kopiera"
+								 type="submit"
+								 action="#{cloneFolderBackingBean.cloneFolder}"
+								 update="@form"
+				/>
+				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view" />
+			</div>
+		</h:form>
+
+	</h:body>
+</f:view>

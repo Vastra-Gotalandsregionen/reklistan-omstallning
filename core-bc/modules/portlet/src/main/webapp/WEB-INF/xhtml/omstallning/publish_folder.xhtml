@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<f:view
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:reklistan="http://java.sun.com/jsf/composite/component/reklistan"
+>
+
+	<h:head />
+	<h:body>
+
+
+		<reklistan:navigation activeOutcome="publish_folder" />
+
+		<h:form id="publishFolderForm">
+			<div class="msg-wrap">
+				<h:messages showSummary="true" showDetail="false" />
+			</div>
+
+			<div class="form-group">
+				<p:outputLabel for="@next" value="Mapp som skall publiceras:"/>
+				<p:selectOneMenu id="publish"
+								 name="publish"
+								 styleClass="form-control"
+								 value="#{publishFolderBackingBean.folderIdToPublish}"
+								 required="true"
+								 requiredMessage="Du måste välja vilken mapp som skall publiceras"
+								 appendTo="@this"
+				>
+					<f:selectItem itemValue="#{null}" itemLabel="#{bundle['choose-folder']}" />
+					<f:selectItems value="#{publishFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
+				</p:selectOneMenu>
+			</div>
+
+			<hr />
+			<div class="button-row justify-content-center">
+				<p:commandButton styleClass="btn btn-primary"
+								 value="Publicera"
+								 type="submit"
+								 action="#{publishFolderBackingBean.publishFolder}"
+								 update="@form"
+				/>
+				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view" />
+			</div>
+
+		</h:form>
+
+	</h:body>
+</f:view>

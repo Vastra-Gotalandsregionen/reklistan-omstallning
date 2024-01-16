@@ -1,0 +1,26 @@
+.ui-dialog {
+  position: fixed !important;
+
+  .ui-dialog-titlebar {
+    //background: var(--gray-200);
+    //border-bottom: 1px solid var(--gray-500);
+    background: var(--primary);
+    color: white;
+    padding: 1rem;
+
+    .ui-dialog-titlebar-icon {
+      color: white;
+
+      &:hover {
+        background: white;
+        color: var(--primary);
+      }
+    }
+
+  }
+
+  .ui-dialog-content {
+    max-height: 80vh;
+    padding-top: 1rem;
+  }
+}
