@@ -10,38 +10,44 @@
 
 	<h:head />
 	<h:body>
-		<reklistan:navigation activeOutcome="unpublish_folder" />
+		<reklistan:navigation activeOutcome="publish_folder" />
 
-		<h:form id="unpublishFolderForm">
+		<h:form id="publishFolderForm">
+			<div class="mb-3 alert alert-info">
+				Efter publicering av en mapp måste sajten reindexeras på hotell-instansen!
+			</div>
+
 			<div class="msg-wrap">
 				<h:messages showSummary="true" showDetail="false" />
 			</div>
 
 			<div class="form-group">
-				<p:outputLabel for="@next" value="Mapp som skall avpubliceras:"/>
-				<p:selectOneMenu id="unpublish"
-								 name="unpublish"
+				<p:outputLabel for="@next" value="Mapp som skall publiceras:"/>
+				<p:selectOneMenu id="publish"
+								 name="publish"
 								 styleClass="form-control"
-								 value="#{unpublishFolderBackingBean.folderIdToUnpublish}"
+								 value="#{publishFolderBackingBean.folderIdToPublish}"
+								 converter="javax.faces.Long"
 								 required="true"
-								 requiredMessage="Du måste välja vilken mapp som skall avpubliceras"
+								 requiredMessage="Du måste välja vilken mapp som skall publiceras"
 								 appendTo="@this"
 				>
 					<f:selectItem itemValue="#{null}" itemLabel="#{bundle['choose-folder']}" />
-					<f:selectItems value="#{unpublishFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
+					<f:selectItems value="#{publishFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
 				</p:selectOneMenu>
 			</div>
 
 			<hr />
 			<div class="button-row justify-content-center">
 				<p:commandButton styleClass="btn btn-primary"
-								 value="Avpublicera"
+								 value="Publicera"
 								 type="submit"
-								 action="#{unpublishFolderBackingBean.unpublishFolder}"
+								 action="#{publishFolderBackingBean.publishFolder}"
 								 update="@form"
 				/>
-				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view" />
+				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view_clone_folder" />
 			</div>
+
 		</h:form>
 
 	</h:body>

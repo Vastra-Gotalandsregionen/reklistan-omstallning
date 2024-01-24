@@ -2,8 +2,6 @@ package se.vgregion.reklistan.backingbean;
 
 
 import com.liferay.journal.model.JournalFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -25,8 +23,6 @@ import java.util.Locale;
 @Scope(value = "request")
 public class PublishFolderBackingBean {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(PublishFolderBackingBean.class);
-
     @Autowired
     private FacesUtil facesUtil;
 
@@ -35,16 +31,6 @@ public class PublishFolderBackingBean {
 
     @Autowired
     private MessageSource messageSource;
-
-    private String portletNamespace;
-
-    public String getPortletNamespace() {
-        return portletNamespace;
-    }
-
-    public void setPortletNamespace(String portletNamespace) {
-        this.portletNamespace = portletNamespace;
-    }
 
     private List<JournalFolder> rootFolders;
 
@@ -66,9 +52,7 @@ public class PublishFolderBackingBean {
         this.folderIdToPublish = folderIdToPublish;
     }
 
-    public String publishFolder() {
-        System.out.println("PublishFolderBackingBean - publishFolder");
-
+    public void publishFolder() {
         try {
             folderService.publishFolder(folderIdToPublish);
 
@@ -76,13 +60,10 @@ public class PublishFolderBackingBean {
         } catch (PublishFolderException e) {
             addFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR);
         }
-
-        return "publish_folder?faces-redirect=true&includeViewParams=true";
     }
 
     @PostConstruct
     public void init() {
-        portletNamespace = FacesContext.getCurrentInstance().getExternalContext().encodeNamespace("");
         long scopeGroupId = facesUtil.getThemeDisplay().getScopeGroupId();
         rootFolders = folderService.getRootFolders(scopeGroupId);
     }

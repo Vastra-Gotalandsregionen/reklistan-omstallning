@@ -10,7 +10,6 @@
 
 	<h:head />
 	<h:body>
-
 		<reklistan:navigation activeOutcome="clone_folder" />
 
 		<h:form id="cloneFolderForm">
@@ -24,6 +23,7 @@
 								 name="copyFrom"
 								 styleClass="form-control"
 								 value="#{cloneFolderBackingBean.folderIdToClone}"
+								 converter="javax.faces.Long"
 								 required="true"
 								 requiredMessage="Du måste välja vilken mapp som skall kopieras"
 								 appendTo="@this"
@@ -51,9 +51,10 @@
 								 action="#{cloneFolderBackingBean.cloneFolder}"
 								 update="@form"
 				/>
-				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view" />
+				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view_clone_folder" />
 			</div>
 		</h:form>
 
 	</h:body>
+
 </f:view>

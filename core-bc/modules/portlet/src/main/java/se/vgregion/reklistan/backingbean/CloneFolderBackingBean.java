@@ -2,8 +2,6 @@ package se.vgregion.reklistan.backingbean;
 
 
 import com.liferay.journal.model.JournalFolder;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Scope;
@@ -25,8 +23,6 @@ import java.util.Locale;
 @Scope(value = "request")
 public class CloneFolderBackingBean {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CloneFolderBackingBean.class);
-
     @Autowired
     private FacesUtil facesUtil;
 
@@ -35,16 +31,6 @@ public class CloneFolderBackingBean {
 
     @Autowired
     private MessageSource messageSource;
-
-    private String portletNamespace;
-
-    public String getPortletNamespace() {
-        return portletNamespace;
-    }
-
-    public void setPortletNamespace(String portletNamespace) {
-        this.portletNamespace = portletNamespace;
-    }
 
     private List<JournalFolder> rootFolders;
 
@@ -68,6 +54,12 @@ public class CloneFolderBackingBean {
         this.folderIdToClone = folderIdToClone;
     }
 
+    private String foo;
+
+    public String getFoo() { return foo; }
+
+    public void setFoo(String foo) { this.foo = foo; }
+
     public String getFolderNameNew() {
         return folderNameNew;
     }
@@ -76,23 +68,20 @@ public class CloneFolderBackingBean {
         this.folderNameNew = folderNameNew;
     }
 
-    public String cloneFolder() {
-        boolean shouldBeWorkingFolder = true;
-
+    public void cloneFolder() {
         try {
-            folderService.cloneFolder(folderIdToClone, folderNameNew, shouldBeWorkingFolder);
+            folderService.cloneFolder(folderIdToClone, folderNameNew);
 
             addFacesMessage("clone-folder-success", FacesMessage.SEVERITY_INFO);
         } catch (CloneFolderException e) {
             addFacesMessage(e.getMessage(), FacesMessage.SEVERITY_ERROR);
         }
-
-        return "clone_folder?faces-redirect=true&includeViewParams=true";
     }
 
     @PostConstruct
     public void init() {
-        portletNamespace = FacesContext.getCurrentInstance().getExternalContext().encodeNamespace("");
+        foo = "Foo";
+
         long scopeGroupId = facesUtil.getThemeDisplay().getScopeGroupId();
         rootFolders = folderService.getRootFolders(scopeGroupId);
     }

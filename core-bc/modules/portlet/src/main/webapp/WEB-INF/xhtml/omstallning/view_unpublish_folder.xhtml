@@ -10,41 +10,43 @@
 
 	<h:head />
 	<h:body>
+		<reklistan:navigation activeOutcome="unpublish_folder" />
 
+		<h:form id="unpublishFolderForm">
+			<!--
+			<p class="mb-3">Foo: ${unpublishFolderBackingBean.foo}</p>
+			-->
 
-		<reklistan:navigation activeOutcome="publish_folder" />
-
-		<h:form id="publishFolderForm">
 			<div class="msg-wrap">
 				<h:messages showSummary="true" showDetail="false" />
 			</div>
 
 			<div class="form-group">
-				<p:outputLabel for="@next" value="Mapp som skall publiceras:"/>
-				<p:selectOneMenu id="publish"
-								 name="publish"
+				<p:outputLabel for="@next" value="Mapp som skall avpubliceras:"/>
+				<p:selectOneMenu id="unpublish"
+								 name="unpublish"
 								 styleClass="form-control"
-								 value="#{publishFolderBackingBean.folderIdToPublish}"
+								 value="#{unpublishFolderBackingBean.folderIdToUnpublish}"
+								 converter="javax.faces.Long"
 								 required="true"
-								 requiredMessage="Du måste välja vilken mapp som skall publiceras"
+								 requiredMessage="Du måste välja vilken mapp som skall avpubliceras"
 								 appendTo="@this"
 				>
 					<f:selectItem itemValue="#{null}" itemLabel="#{bundle['choose-folder']}" />
-					<f:selectItems value="#{publishFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
+					<f:selectItems value="#{unpublishFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
 				</p:selectOneMenu>
 			</div>
 
 			<hr />
 			<div class="button-row justify-content-center">
 				<p:commandButton styleClass="btn btn-primary"
-								 value="Publicera"
+								 value="Avpublicera"
 								 type="submit"
-								 action="#{publishFolderBackingBean.publishFolder}"
+								 action="#{unpublishFolderBackingBean.unpublishFolder}"
 								 update="@form"
 				/>
-				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view" />
+				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view_clone_folder" />
 			</div>
-
 		</h:form>
 
 	</h:body>

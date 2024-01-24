@@ -2,8 +2,6 @@ package se.vgregion.reklistan.util;
 
 import com.liferay.portal.kernel.theme.ThemeDisplay;
 import com.liferay.portal.kernel.util.WebKeys;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Component;
@@ -17,9 +15,6 @@ import java.util.Map;
 @Component
 @Scope(value = "prototype")
 public class FacesUtil {
-
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(FacesUtil.class);
 
     public ThemeDisplay getThemeDisplay() {
         ExternalContext externalContext =
@@ -59,8 +54,6 @@ public class FacesUtil {
 
         String value = parameterMap.get(parameterName);
 
-        LOGGER.info("FacesUtil - fetchProperty(): {}", value);
-
         return value;
     }
 
@@ -70,13 +63,11 @@ public class FacesUtil {
 
         boolean valueBoolean = Boolean.parseBoolean(value);
 
-        LOGGER.info("FacesUtil - fetchBooleanProperty(): {}", valueBoolean);
-
         return valueBoolean;
     }
 
 
     public Locale getLocale() {
-        return LocaleContextHolder.getLocale();
+        return getThemeDisplay().getLocale();
     }
 }

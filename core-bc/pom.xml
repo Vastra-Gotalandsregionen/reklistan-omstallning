@@ -21,7 +21,6 @@ Generation time : 2015-01-14 09:02:50 CET
   <name>${project.artifactId}</name>
 
   <modules>
-    <module>composites/types</module>
     <module>composites/svc</module>
     <module>modules/portlet</module>
   </modules>

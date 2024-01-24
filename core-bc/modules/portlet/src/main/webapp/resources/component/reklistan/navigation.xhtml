@@ -16,21 +16,16 @@
         <nav class="tabs-menu mb-3">
             <ul class="nav nav-tabs">
                 <li class="nav-item">
-                    <h:link styleClass="nav-link ${empty activeOutcome or activeOutcome eq 'view' ? 'active' : ''}" value="Start" outcome="view" />
+                    <h:link styleClass="nav-link ${activeOutcome eq 'clone_folder' ? 'active' : ''}" value="Kopiera" outcome="view_clone_folder" />
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link ${activeOutcome eq 'clone_folder' ? 'active' : ''}" value="Kopiera" outcome="clone_folder" />
+                    <h:link styleClass="nav-link ${activeOutcome eq 'publish_folder' ? 'active' : ''}" value="Publicera" outcome="view_publish_folder" />
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link ${activeOutcome eq 'publish_folder' ? 'active' : ''}" value="Publicera" outcome="publish_folder" />
-                </li>
-                <li class="nav-item">
-                    <h:link styleClass="nav-link ${activeOutcome eq 'unpublish_folder' ? 'active' : ''}" value="Avpublicera" outcome="unpublish_folder" />
+                    <h:link styleClass="nav-link ${activeOutcome eq 'unpublish_folder' ? 'active' : ''}" value="Avpublicera" outcome="view_unpublish_folder" />
                 </li>
             </ul>
         </nav>
-
-
     </composite:implementation>
 
 </ui:component>
