@@ -1,0 +1,11 @@
+.ui-paginator {
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .ui-paginator-rpp-options {
+    border: 1px solid #ced4da;
+    padding: 0.3rem;
+  }
+}

@@ -1,0 +1,27 @@
+.ui-menu {
+  width: 15rem;
+
+  &.ui-menu-right {
+    right: 0 !important;
+    left: auto !important;
+  }
+
+  .ui-menu-list {
+    .ui-menuitem {
+      .ui-menuitem-link {
+        display: flex;
+        text-align: left;
+
+        .ui-icon {
+          height: 1rem;
+          margin-right: 1rem;
+          width: 1rem;
+        }
+
+        .ui-icon + .ui-menuitem-text {}
+
+      }
+    }
+  }
+
+}

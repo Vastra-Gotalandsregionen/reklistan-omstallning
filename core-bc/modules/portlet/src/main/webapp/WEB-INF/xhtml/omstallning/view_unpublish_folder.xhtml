@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<f:view
+		xmlns="http://www.w3.org/1999/xhtml"
+		xmlns:f="http://java.sun.com/jsf/core"
+		xmlns:h="http://java.sun.com/jsf/html"
+		xmlns:p="http://primefaces.org/ui"
+		xmlns:reklistan="http://java.sun.com/jsf/composite/component/reklistan"
+>
+
+	<h:head />
+	<h:body>
+		<reklistan:navigation activeOutcome="unpublish_folder" />
+
+		<h:form id="unpublishFolderForm">
+			<!--
+			<p class="mb-3">Foo: ${unpublishFolderBackingBean.foo}</p>
+			-->
+
+			<div class="msg-wrap">
+				<h:messages showSummary="true" showDetail="false" />
+			</div>
+
+			<div class="form-group">
+				<p:outputLabel for="@next" value="Mapp som skall avpubliceras:"/>
+				<p:selectOneMenu id="unpublish"
+								 name="unpublish"
+								 styleClass="form-control"
+								 value="#{unpublishFolderBackingBean.folderIdToUnpublish}"
+								 converter="javax.faces.Long"
+								 required="true"
+								 requiredMessage="Du måste välja vilken mapp som skall avpubliceras"
+								 appendTo="@this"
+				>
+					<f:selectItem itemValue="#{null}" itemLabel="#{bundle['choose-folder']}" />
+					<f:selectItems value="#{unpublishFolderBackingBean.rootFolders}" var="folder" itemLabel="#{folder.name}" itemValue="#{folder.folderId}"  />
+				</p:selectOneMenu>
+			</div>
+
+			<hr />
+			<div class="button-row justify-content-center">
+				<p:commandButton styleClass="btn btn-primary"
+								 value="Avpublicera"
+								 type="submit"
+								 action="#{unpublishFolderBackingBean.unpublishFolder}"
+								 update="@form"
+				/>
+				<h:button styleClass="btn btn-link" value="Avbryt" outcome="view_clone_folder" />
+			</div>
+		</h:form>
+
+	</h:body>
+</f:view>

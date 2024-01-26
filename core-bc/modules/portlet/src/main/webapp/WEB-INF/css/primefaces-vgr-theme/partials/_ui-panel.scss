@@ -1,0 +1,13 @@
+.ui-panel {
+
+  .ui-panel-titlebar {
+    border: 1px solid #dee2e6;
+  }
+
+  &.ui-panel-header-toggleable {
+    .ui-panel-titlebar {
+      cursor: pointer;
+    }
+  }
+
+}

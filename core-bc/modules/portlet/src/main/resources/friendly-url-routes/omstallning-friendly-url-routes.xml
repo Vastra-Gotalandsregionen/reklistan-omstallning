@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.4.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_4_0.dtd">
+
+<routes>
+    <!--
+    <route>
+        <pattern>/</pattern>
+        <ignored-parameter name="p_p_col_id" />
+        <ignored-parameter name="p_p_col_count" />
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="p_p_state">normal</implicit-parameter>
+        <implicit-parameter name="p_p_mode">view</implicit-parameter>
+        <implicit-parameter name="_facesViewIdRender">/WEB-INF/xhtml/omstallning/view_clone_folder.xhtml</implicit-parameter>
+    </route>
+    -->
+    <route>
+        <pattern>/kopiera</pattern>
+        <ignored-parameter name="p_p_col_id" />
+        <ignored-parameter name="p_p_col_count" />
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="p_p_state">normal</implicit-parameter>
+        <implicit-parameter name="p_p_mode">view</implicit-parameter>
+        <implicit-parameter name="_facesViewIdRender">/WEB-INF/xhtml/omstallning/view_clone_folder.xhtml</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/publicera</pattern>
+        <ignored-parameter name="p_p_col_id" />
+        <ignored-parameter name="p_p_col_count" />
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="p_p_state">normal</implicit-parameter>
+        <implicit-parameter name="p_p_mode">view</implicit-parameter>
+        <implicit-parameter name="_facesViewIdRender">/WEB-INF/xhtml/omstallning/view_publish_folder.xhtml</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/avpublicera</pattern>
+        <ignored-parameter name="p_p_col_id" />
+        <ignored-parameter name="p_p_col_count" />
+        <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
+        <implicit-parameter name="p_p_state">normal</implicit-parameter>
+        <implicit-parameter name="p_p_mode">view</implicit-parameter>
+        <implicit-parameter name="_facesViewIdRender">/WEB-INF/xhtml/omstallning/view_unpublish_folder.xhtml</implicit-parameter>
+    </route>
+
+</routes>

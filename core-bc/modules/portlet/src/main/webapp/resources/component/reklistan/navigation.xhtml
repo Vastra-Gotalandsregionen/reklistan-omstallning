@@ -1,0 +1,31 @@
+<ui:component xmlns="http://www.w3.org/1999/xhtml"
+              xmlns:h="http://xmlns.jcp.org/jsf/html"
+              xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+              xmlns:p="http://primefaces.org/ui"
+              xmlns:composite="http://java.sun.com/jsf/composite"
+              xmlns:c="http://java.sun.com/jsp/jstl/core"
+>
+
+    <composite:interface>
+        <composite:attribute name="activeOutcome" required="false" />
+    </composite:interface>
+
+    <composite:implementation>
+        <c:set var="activeOutcome" value="#{cc.attrs.activeOutcome}"/>
+
+        <nav class="tabs-menu mb-3">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <h:link styleClass="nav-link ${activeOutcome eq 'clone_folder' ? 'active' : ''}" value="Kopiera" outcome="view_clone_folder" />
+                </li>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link ${activeOutcome eq 'publish_folder' ? 'active' : ''}" value="Publicera" outcome="view_publish_folder" />
+                </li>
+                <li class="nav-item">
+                    <h:link styleClass="nav-link ${activeOutcome eq 'unpublish_folder' ? 'active' : ''}" value="Avpublicera" outcome="view_unpublish_folder" />
+                </li>
+            </ul>
+        </nav>
+    </composite:implementation>
+
+</ui:component>

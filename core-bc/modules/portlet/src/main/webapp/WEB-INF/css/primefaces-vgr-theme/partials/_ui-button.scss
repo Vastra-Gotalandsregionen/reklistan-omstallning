@@ -1,0 +1,110 @@
+.ui-button.btn {
+
+  &.ui-button-text-only,
+  &.ui-button-icon-only,
+  &.ui-button-text-icon-left,
+  &.ui-button-text-icon-right {
+    background-color: transparent;
+    border-radius: 0.25rem;
+    color: var(--body-color);
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    padding: 0.4375rem 0.9375rem;
+
+    .ui-button-text {
+      line-height: inherit;
+      padding: 0;
+    }
+
+    .ui-icon {
+      margin: 0;
+      position: static;
+    }
+
+    &.ui-button-text-icon-left {
+      .ui-icon {
+        margin-right: 0.5rem;
+      }
+    }
+
+    &.ui-button-text-icon-right {
+      flex-direction: row-reverse;
+      .ui-icon {
+        margin-left: 0.5rem;
+      }
+    }
+
+  }
+
+  &.btn-lg {
+    font-size: 1.125rem;
+    padding: 0.59375rem 1.5rem;
+  }
+
+  &.btn-link {
+    background-color: transparent;
+    border-color: transparent;
+
+    &:hover {
+      .ui-button-text {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  &.btn-default {
+    background-color: var(--gray-700);
+    border-color: var(--gray-700);
+    color: white;
+
+    &:hover {
+      background-color: var(--gray-800);
+      border-color: var(--gray-800);
+    }
+  }
+
+  &.btn-outline-default {
+    background-color: transparent;
+    border-color: var(--gray-700);
+    color: var(--body-color);
+
+    &:hover {
+      border-color: var(--gray-800);
+    }
+  }
+
+  &.btn-primary {
+    background-color: var(--btn-primary-background-color);
+    border-color: var(--btn-primary-border-color);
+    color: var(--btn-primary-color);
+  }
+
+  &.btn-outline-primary {
+    background-color: transparent;
+    border-color: var(--btn-outline-primary-border-color);
+    color: var(--btn-outline-primary-color);
+  }
+
+  &.btn-secondary {
+    background-color: var(--btn-secondary-background-color);
+    border-color: var(--btn-secondary-border-color);
+    color: var(--btn-outline-secondary-color);
+  }
+
+  &.btn-outline-secondary {
+    background-color: transparent;
+    border-color: var(--btn-outline-secondary-border-color);
+    color: var(--btn-secondary-color);
+  }
+
+  &.btn-danger {
+    background-color: var(--danger);
+    border-color: var(--danger);
+    color: white;
+  }
+
+
+}

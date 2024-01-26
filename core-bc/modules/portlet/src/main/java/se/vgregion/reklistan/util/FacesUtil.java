@@ -18,9 +18,6 @@ import java.util.Map;
 @Scope(value = "prototype")
 public class FacesUtil {
 
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(FacesUtil.class);
-
     public ThemeDisplay getThemeDisplay() {
         ExternalContext externalContext =
                 FacesContext.getCurrentInstance().getExternalContext();
@@ -59,8 +56,6 @@ public class FacesUtil {
 
         String value = parameterMap.get(parameterName);
 
-        LOGGER.info("FacesUtil - fetchProperty(): {}", value);
-
         return value;
     }
 
@@ -70,13 +65,11 @@ public class FacesUtil {
 
         boolean valueBoolean = Boolean.parseBoolean(value);
 
-        LOGGER.info("FacesUtil - fetchBooleanProperty(): {}", valueBoolean);
-
         return valueBoolean;
     }
 
 
     public Locale getLocale() {
-        return LocaleContextHolder.getLocale();
+        return getThemeDisplay().getLocale();
     }
 }
