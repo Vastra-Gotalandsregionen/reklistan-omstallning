@@ -14,7 +14,7 @@
     </route>
     -->
     <route>
-        <pattern>/kopiera</pattern>
+        <pattern>/kopiera-ak</pattern>
         <ignored-parameter name="p_p_col_id" />
         <ignored-parameter name="p_p_col_count" />
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
@@ -23,7 +23,7 @@
         <implicit-parameter name="_facesViewIdRender">/WEB-INF/xhtml/omstallning/view_clone_folder.xhtml</implicit-parameter>
     </route>
     <route>
-        <pattern>/publicera</pattern>
+        <pattern>/publicera-ak</pattern>
         <ignored-parameter name="p_p_col_id" />
         <ignored-parameter name="p_p_col_count" />
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
@@ -32,7 +32,7 @@
         <implicit-parameter name="_facesViewIdRender">/WEB-INF/xhtml/omstallning/view_publish_folder.xhtml</implicit-parameter>
     </route>
     <route>
-        <pattern>/avpublicera</pattern>
+        <pattern>/avpublicera-ak</pattern>
         <ignored-parameter name="p_p_col_id" />
         <ignored-parameter name="p_p_col_count" />
         <implicit-parameter name="p_p_lifecycle">0</implicit-parameter>
