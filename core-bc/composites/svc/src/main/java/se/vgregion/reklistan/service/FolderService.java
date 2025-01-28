@@ -27,11 +27,7 @@ import se.vgregion.reklistan.exception.CloneFolderException;
 import se.vgregion.reklistan.exception.PublishFolderException;
 import se.vgregion.reklistan.exception.UnpublishFolderException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author Erik Andersson
@@ -78,7 +74,7 @@ public class FolderService {
             long parentFolderId = 0;
             String newFolderDescription = "";
             String newFolderName = folderNameNew;
-            String externalReferenceCode = EXTERNAL_REFERENCE_CODE_PREFIX + folderNameNew;
+            String externalReferenceCode = UUID.randomUUID().toString();
             boolean isRoot = true;
 
             JournalFolder newFolder = createFolder(externalReferenceCode, copyFromFolder.getUserId(), groupId,
@@ -241,7 +237,7 @@ public class FolderService {
             } else {
                 // Clone folder
                 String newFolderName = copyFromFolder.getName();
-                String externalReferenceCode = EXTERNAL_REFERENCE_CODE_PREFIX + newFolderName;
+                String externalReferenceCode = UUID.randomUUID().toString();
 
                 newFolder = createFolder(externalReferenceCode, copyFromFolder.getUserId(), groupId, copyToFolderId,
                         newFolderName, newFolderDescription);
