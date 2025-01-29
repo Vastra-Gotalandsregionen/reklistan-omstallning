@@ -7,7 +7,6 @@ import com.liferay.journal.service.JournalArticleLocalServiceUtil;
 import com.liferay.journal.service.JournalFolderLocalServiceUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.model.ResourcePermission;
 import com.liferay.portal.kernel.model.Role;
@@ -19,15 +18,15 @@ import com.liferay.portal.kernel.service.ServiceContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.PostConstruct;
-
 import se.vgregion.reklistan.constants.AldrekompassenConstants;
 import se.vgregion.reklistan.exception.CloneFolderException;
 import se.vgregion.reklistan.exception.PublishFolderException;
 import se.vgregion.reklistan.exception.UnpublishFolderException;
 
-import java.util.*;
+import javax.annotation.PostConstruct;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Erik Andersson
@@ -272,7 +271,19 @@ public class FolderService {
                 if(isLatestVersion) {
                     JournalArticle copiedArticle = JournalArticleLocalServiceUtil.copyArticle(article.getUserId(), article.getGroupId(), article.getArticleId(), "", true, article.getVersion());
 
-                    updateTitleMap(serviceContext, copiedArticle);
+                    // Keep the same titleMap
+                    copiedArticle.setTitleMap(article.getTitleMap());
+                    JournalArticleLocalServiceUtil.updateArticle(
+                            copiedArticle.getUserId(),
+                            copiedArticle.getGroupId(),
+                            copiedArticle.getFolderId(),
+                            copiedArticle.getArticleId(),
+                            copiedArticle.getVersion(),
+                            copiedArticle.getTitleMap(),
+                            copiedArticle.getDescriptionMap(),
+                            copiedArticle.getContent(),
+                            copiedArticle.getLayoutUuid(),
+                            serviceContext);
 
                     // After copy, move to correct folder (i.e. the newly created folder)
                     JournalArticle movedArticle = JournalArticleLocalServiceUtil.moveArticle(copiedArticle.getGroupId(),
@@ -306,32 +317,6 @@ public class FolderService {
             e.printStackTrace();
         }
 
-    }
-
-    private void updateTitleMap(ServiceContext serviceContext, JournalArticle copiedArticle) throws PortalException {
-        Map<Locale, String> articleTitleMap = copiedArticle.getTitleMap();
-
-        Map<Locale, String> titleMapWithoutDuplicateSuffix = new HashMap<>();
-
-        for (Map.Entry<Locale, String> localeTitleEntry : articleTitleMap.entrySet()) {
-            String duplicateSuffix = " " + LanguageUtil.get(localeTitleEntry.getKey(), "duplicate");
-            String[] split = localeTitleEntry.getValue().split(duplicateSuffix);
-            titleMapWithoutDuplicateSuffix.put(localeTitleEntry.getKey(), split[0]);
-        }
-
-        copiedArticle.setTitleMap(titleMapWithoutDuplicateSuffix);
-
-        JournalArticleLocalServiceUtil.updateArticle(
-                copiedArticle.getUserId(),
-                copiedArticle.getGroupId(),
-                copiedArticle.getFolderId(),
-                copiedArticle.getArticleId(),
-                copiedArticle.getVersion(),
-                titleMapWithoutDuplicateSuffix,
-                copiedArticle.getDescriptionMap(),
-                copiedArticle.getContent(),
-                copiedArticle.getLayoutUuid(),
-                serviceContext);
     }
 
     private JournalFolder createFolder(String externalReferenceCode, long userId, long groupId, long parentFolderId, String folderName, String folderDescription) throws PortalException {
